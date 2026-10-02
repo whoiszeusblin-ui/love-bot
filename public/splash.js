@@ -1,10 +1,9 @@
 (function(){
   try {
-    const KEY = 'teplo_splash_shown';
-    const NOW = Date.now();
-    const shown = parseInt(localStorage.getItem(KEY) || '0', 10);
-    // Не показывать, если уже видели за последние 30 минут
-    if (shown && NOW - shown < 30 * 60 * 1000) return;
+    // sessionStorage = показывать 1 раз за "сессию браузера"
+    // (открыл браузер → splash, перешёл по страницам → без splash, закрыл браузер → splash снова)
+    if (sessionStorage.getItem('teplo_splash_shown')) return;
+    sessionStorage.setItem('teplo_splash_shown', '1');
 
     const s = document.createElement('div');
     s.id = 'splash';
@@ -20,7 +19,6 @@
       '<div class="splash-sub">messages · with love</div>';
 
     document.documentElement.appendChild(s);
-    try { localStorage.setItem(KEY, String(NOW)); } catch(e){}
 
     setTimeout(function(){
       s.classList.add('hide');

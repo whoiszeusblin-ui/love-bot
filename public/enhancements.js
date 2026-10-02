@@ -6,9 +6,10 @@
     const header = document.querySelector('.header');
     if (!header || header.classList.contains('rebuilt')) return;
 
+    // Берём оригинальный .me ЦЕЛИКОМ (со всеми id) — так profile.js сможет обновлять имя
     const meEl = header.querySelector('.me');
-    const meHTML = meEl ? meEl.innerHTML : '';
 
+    // Центрированный логотип
     const logoWrap = document.createElement('div');
     logoWrap.className = 'header-center-logo';
     logoWrap.innerHTML =
@@ -16,13 +17,16 @@
       '<span class="hcl-title">ТЕПЛО</span>' +
       '<span class="hcl-sub">messages · with love</span>';
 
-    const compact = document.createElement('div');
-    compact.className = 'header-compact';
-    compact.innerHTML = '<div class="me">' + meHTML + '</div>';
-
     const parent = header.parentNode;
     parent.insertBefore(logoWrap, header);
-    parent.insertBefore(compact, header.nextSibling);
+
+    if (meEl) {
+      // Переносим .me (тот же самый DOM-элемент) в компактный блок
+      const compact = document.createElement('div');
+      compact.className = 'header-compact';
+      compact.appendChild(meEl); // переносим оригинал, не клон
+      parent.insertBefore(compact, header.nextSibling);
+    }
 
     header.classList.add('rebuilt');
   }
@@ -38,7 +42,6 @@
   function buildWeek(current, lastCheckIn){
     const today = new Date();
     const todayIdx = (today.getDay() + 6) % 7;
-
     const marked = new Set();
     if (lastCheckIn && current > 0) {
       const last = new Date(lastCheckIn + 'T00:00:00');
@@ -48,7 +51,6 @@
         marked.add(toDateStr(d));
       }
     }
-
     const labels = ['Пн','Вт','Ср','Чт','Пт','Сб','Вс'];
     const result = [];
     for (let i = 0; i < 7; i++) {
@@ -83,7 +85,6 @@
       const dotCls = 'wc-dot' + (d.filled ? ' filled' : '') + (d.today ? ' today' : '') + (d.future ? ' future' : '');
       el.innerHTML = '<div class="wc-label">' + d.label + '</div><div class="' + dotCls + '"></div>';
       cal.appendChild(el);
-
       if (!d.future) {
         pastCount++;
         if (d.filled) markedCount++;
@@ -138,9 +139,7 @@
       if (!t) return;
       const r = await fetch('/api/streaks?token=' + encodeURIComponent(t));
       const d = await r.json();
-      if (d.me) {
-        renderWeek(d.me.current || 0, d.me.lastCheckIn || null);
-      }
+      if (d.me) renderWeek(d.me.current || 0, d.me.lastCheckIn || null);
     } catch(e){} finally { fetching = false; }
   }
 
@@ -149,11 +148,8 @@
     enhanceFireCard();
     setTimeout(fetchStreaksAndRender, 900);
     setTimeout(fetchStreaksAndRender, 2500);
-
     document.addEventListener('click', function(e){
-      if (e.target && e.target.id === 'fireBtn') {
-        setTimeout(fetchStreaksAndRender, 1400);
-      }
+      if (e.target && e.target.id === 'fireBtn') setTimeout(fetchStreaksAndRender, 1400);
     }, true);
   }
 
