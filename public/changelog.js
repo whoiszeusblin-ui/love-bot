@@ -1,5 +1,5 @@
 (function(){
-  const LS_KEY = 'teplo_last_seen_version';
+  const LS_KEY = 'teplo_last_seen_v';
 
   const css = `
     .cl-bg{position:fixed;inset:0;background:rgba(0,0,0,.85);backdrop-filter:blur(14px);z-index:5000;display:flex;align-items:center;justify-content:center;padding:20px;opacity:0;transition:opacity .4s cubic-bezier(.16,1,.3,1);pointer-events:none}
@@ -20,13 +20,23 @@
   style.textContent = css;
   document.head.appendChild(style);
 
-  function showModal(data){
+  // Простой хэш от строки — стабильно и без зависимостей
+  function hashStr(s){
+    let h = 0;
+    for (let i = 0; i < s.length; i++){
+      h = ((h << 5) - h) + s.charCodeAt(i);
+      h = h & h;
+    }
+    return h.toString(36);
+  }
+
+  function showModal(data, signature){
     const bg = document.createElement('div');
     bg.className = 'cl-bg';
     let html = '<div class="cl-modal">';
     html += '<span class="cl-emoji">🎉</span>';
     html += '<h2>Что нового</h2>';
-    html += '<div class="cl-version">Версия ' + data.version + ' · ' + data.date + '</div>';
+    html += '<div class="cl-version">' + data.date + '</div>';
     html += '<h3>' + data.title + '</h3>';
     html += '<ul class="cl-list">';
     data.changes.forEach(function(c){ html += '<li>' + c + '</li>'; });
@@ -41,7 +51,7 @@
     bg.querySelector('.cl-btn').onclick = function(){
       bg.classList.remove('show');
       setTimeout(function(){ bg.remove(); }, 400);
-      try { localStorage.setItem(LS_KEY, data.version); } catch(e) {}
+      try { localStorage.setItem(LS_KEY, signature); } catch(e) {}
     };
   }
 
@@ -52,9 +62,10 @@
         const versions = data.versions || [];
         if (!versions.length) return;
         const latest = versions[0];
+        const signature = hashStr(JSON.stringify(latest));
         const seen = localStorage.getItem(LS_KEY);
-        if (seen === latest.version) return;
-        showModal(latest);
+        if (seen === signature) return;
+        showModal(latest, signature);
       })
       .catch(function(){});
   }, 2500);
