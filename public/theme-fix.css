@@ -1,0 +1,39 @@
+/* Карточка серии — использует переменные темы */
+.fire-card{
+  background:linear-gradient(145deg,var(--card),var(--bg));
+  border-color:rgba(255,255,255,.1);
+  box-shadow:0 10px 40px var(--fire-glow,rgba(255,33,100,.2));
+}
+body.theme-soft .fire-card,
+body.theme-day .fire-card{border-color:rgba(0,0,0,.1)}
+.fire-card::before{
+  background:radial-gradient(circle,var(--fire-glow,rgba(255,80,30,.35)),transparent 60%);
+}
+.fire-card.off{
+  background:linear-gradient(145deg,var(--card),var(--bg));
+  border-color:var(--border2);
+}
+.fire-card.off::before{
+  background:radial-gradient(circle,rgba(120,120,120,.12),transparent 60%);
+}
+.fire-emoji{filter:drop-shadow(0 0 20px var(--pink,rgba(255,80,30,.8)))}
+.fire-num{
+  background:linear-gradient(135deg,var(--pink,#ff6a2a),var(--mag,#fb3dff));
+  -webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;
+  background-clip:text;
+}
+.fire-btn{
+  background:linear-gradient(145deg,var(--pink,#ff6a2a),var(--mag,#ff2164));
+  box-shadow:0 6px 0 rgba(0,0,0,.4),0 10px 24px var(--fire-glow,rgba(255,33,100,.4));
+}
+.fire-btn:active{box-shadow:0 2px 0 rgba(0,0,0,.4)}
+/* Карточки наказаний */
+.punish-card{
+  background:linear-gradient(145deg,var(--card),var(--bg));
+  border-color:var(--pink);
+}
+.punish-btn{
+  background:linear-gradient(145deg,var(--pink),var(--mag));
+  box-shadow:0 5px 0 rgba(0,0,0,.4),0 8px 20px var(--fire-glow,rgba(255,150,30,.35));
+}
