@@ -45,6 +45,9 @@
   }, { passive: true });
 
   /* ===== Переход между вкладками ===== */
+  /* Проверяем поддержку View Transitions API */
+  const hasViewTransitions = 'startViewTransition' in document;
+
   document.addEventListener('click', function(e){
     const link = e.target.closest('a[href]');
     if (!link) return;
@@ -55,6 +58,10 @@
     if (href.indexOf('mailto:') === 0 || href.indexOf('tel:') === 0) return;
     if (link.target === '_blank' || link.hasAttribute('download')) return;
 
+    // Если View Transitions работает — пусть браузер сам делает красивый переход
+    if (hasViewTransitions) return;
+
+    // Fallback: fade-out перед переходом
     e.preventDefault();
     document.body.classList.add('page-leaving');
     setTimeout(function(){ location.href = href; }, 240);
