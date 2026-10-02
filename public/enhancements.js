@@ -1,29 +1,30 @@
 (function(){
   function $(id){ return document.getElementById(id); }
 
-  /* ===== Аватарка за логотипом ===== */
+  /* ===== Перестройка шапки ===== */
   function enhanceBrand(){
-    const brand = document.querySelector('.header .brand');
-    if (!brand || brand.classList.contains('brand-wrap')) return;
-    brand.classList.add('brand-wrap');
-    const bg = document.createElement('div');
-    bg.className = 'brand-bg-emoji';
-    bg.id = 'brandBgEmoji';
-    bg.textContent = '💖';
-    brand.insertBefore(bg, brand.firstChild);
-    setTimeout(updateBrandEmoji, 1000);
-  }
+    const header = document.querySelector('.header');
+    if (!header || header.classList.contains('rebuilt')) return;
 
-  async function updateBrandEmoji(){
-    const bg = $('brandBgEmoji');
-    if (!bg) return;
-    const t = localStorage.getItem('teplo_token_v1');
-    if (!t) return;
-    try {
-      const r = await fetch('/api/profile?token=' + encodeURIComponent(t));
-      const d = await r.json();
-      if (d && d.emoji) bg.textContent = d.emoji;
-    } catch(e){}
+    const meEl = header.querySelector('.me');
+    const meHTML = meEl ? meEl.innerHTML : '';
+
+    const logoWrap = document.createElement('div');
+    logoWrap.className = 'header-center-logo';
+    logoWrap.innerHTML =
+      '<span class="hcl-bg">Т</span>' +
+      '<span class="hcl-title">ТЕПЛО</span>' +
+      '<span class="hcl-sub">messages · with love</span>';
+
+    const compact = document.createElement('div');
+    compact.className = 'header-compact';
+    compact.innerHTML = '<div class="me">' + meHTML + '</div>';
+
+    const parent = header.parentNode;
+    parent.insertBefore(logoWrap, header);
+    parent.insertBefore(compact, header.nextSibling);
+
+    header.classList.add('rebuilt');
   }
 
   /* ===== Календарь недели ===== */
@@ -127,7 +128,7 @@
     }
   }
 
-  /* ===== Данные с сервера ===== */
+  /* ===== Данные ===== */
   let fetching = false;
   async function fetchStreaksAndRender(){
     if (fetching) return;
@@ -149,7 +150,6 @@
     setTimeout(fetchStreaksAndRender, 900);
     setTimeout(fetchStreaksAndRender, 2500);
 
-    // Обновляем при клике на "Отметить день"
     document.addEventListener('click', function(e){
       if (e.target && e.target.id === 'fireBtn') {
         setTimeout(fetchStreaksAndRender, 1400);
