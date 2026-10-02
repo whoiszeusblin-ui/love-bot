@@ -192,3 +192,62 @@ body.theme-soft .rp-item.active, body.theme-day .rp-item.active{
   transition: all .2s ease;
 }
 .rp-close:active{ transform: scale(.98); }
+
+/* ===== КНОПКА В СТИЛЕ БЕЙДЖА ПРОФИЛЯ ===== */
+.rp-btn{
+  padding: 8px 14px !important;
+  border-radius: 100px !important;
+  background: var(--card) !important;
+  border: 1px solid var(--border) !important;
+  color: var(--text) !important;
+  font-size: 13px !important;
+  font-weight: 700 !important;
+  font-family: inherit !important;
+  box-shadow: none !important;
+  gap: 8px !important;
+  display: inline-flex !important;
+  align-items: center !important;
+}
+.rp-btn:active{ transform: scale(.97) !important; }
+
+/* Скрываем стрелку ▼ и статус-точку */
+.rp-btn .rp-arrow{ display: none !important; }
+.rp-btn .rp-dot{ display: none !important; }
+
+/* Emoji меньше, как у профиля */
+.rp-btn .rp-em{
+  font-size: 15px !important;
+  line-height: 1 !important;
+}
+.rp-btn .rp-name{
+  font-size: 13px !important;
+  font-weight: 700 !important;
+  max-width: 120px !important;
+}
+/* Отменяем радужный контур */
+.rp-btn{
+  background: var(--card) !important;
+  background-image: none !important;
+}
+body.theme-soft .rp-btn, body.theme-day .rp-btn{
+  background: var(--card) !important;
+  background-image: none !important;
+  color: var(--text) !important;
+}
+
+/* Заголовок слева — как в остальных секциях */
+.rp-label{
+  font-size: 11px !important;
+  font-weight: 700 !important;
+  letter-spacing: .14em !important;
+  text-transform: uppercase !important;
+  color: var(--dim) !important;
+  font-family: 'Roboto Mono', monospace !important;
+}
+.rp-bar{
+  margin-bottom: 14px !important;
+  padding: 0 2px !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+}
