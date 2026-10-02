@@ -511,3 +511,62 @@ body.hue-dragging .fire-ember{
 .fire-wrap{
   max-width: 100%;
 }
+
+/* ===== ПОЛНАЯ ОЧИСТКА ОТ ОСКОЛКОВ ===== */
+
+/* Убираем ВСЕ псевдоэлементы с карточек */
+.act::before, .act::after,
+.rec::before, .rec::after,
+.hitem::before, .hitem::after,
+.settings-item::before, .settings-item::after,
+.stats::before, .stats::after,
+.hue-wrap::before, .hue-wrap::after,
+.btn-item::before, .btn-item::after,
+.faq-item::before, .faq-item::after,
+.fire-card::before, .fire-card::after,
+.quiz-card::before, .quiz-card::after,
+.quiz-result-item::before, .quiz-result-item::after,
+.history-item::before, .history-item::after{
+  display: none !important;
+  content: none !important;
+}
+
+/* Убираем возможные box-shadow, которые торчат */
+.act, .rec, .hitem, .settings-item, .stats, .hue-wrap,
+.btn-item, .faq-item, .fire-card, .quiz-card, .quiz-result-item, .history-item{
+  box-shadow: 0 4px 16px rgba(0,0,0,.18) !important;
+}
+
+/* Перерисовываем стекло + рамку чисто, одним слоем */
+.act, .rec, .hitem, .settings-item, .stats, .hue-wrap,
+.btn-item, .faq-item, .fire-card, .quiz-card, .quiz-result-item, .history-item{
+  background:
+    linear-gradient(rgba(20,20,25,.92), rgba(20,20,25,.92)) padding-box,
+    linear-gradient(135deg, var(--pink), var(--mag), var(--pur), var(--blue), var(--pink)) border-box !important;
+  border: 1.5px solid transparent !important;
+  border-radius: inherit;
+  overflow: hidden !important;
+  position: relative;
+  isolation: isolate;
+}
+
+/* Светлые темы */
+body.theme-soft .act, body.theme-soft .rec, body.theme-soft .hitem,
+body.theme-soft .settings-item, body.theme-soft .stats, body.theme-soft .hue-wrap,
+body.theme-soft .btn-item, body.theme-soft .faq-item, body.theme-soft .fire-card,
+body.theme-soft .quiz-card, body.theme-soft .quiz-result-item, body.theme-soft .history-item,
+body.theme-day .act, body.theme-day .rec, body.theme-day .hitem,
+body.theme-day .settings-item, body.theme-day .stats, body.theme-day .hue-wrap,
+body.theme-day .btn-item, body.theme-day .faq-item, body.theme-day .fire-card,
+body.theme-day .quiz-card, body.theme-day .quiz-result-item, body.theme-day .history-item{
+  background:
+    linear-gradient(rgba(255,255,255,.94), rgba(255,255,255,.94)) padding-box,
+    linear-gradient(135deg, var(--pink), var(--mag), var(--pur), var(--blue), var(--pink)) border-box !important;
+}
+
+/* ===== БЕЛЫЕ ТОЧКИ (частицы) — убираем из карточек, оставляем на фоне ===== */
+.bg-anim{ z-index: 0 !important; }
+.bg-anim .particle{ z-index: 0 !important; }
+
+/* Но контент карточек выше фона */
+.app{ position: relative; z-index: 1; }
