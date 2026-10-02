@@ -1,4 +1,4 @@
-const CACHE = 'teplo-v8';
+const CACHE = 'teplo-v9';
 const ASSETS = ['/', '/index.html', '/draw.html', '/manifest.json',
                 '/icon-192.svg', '/icon-512.svg', '/pwa-init.js'];
 
