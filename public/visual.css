@@ -482,3 +482,32 @@ body.hue-dragging .fire-spark,
 body.hue-dragging .fire-ember{
   display: none !important;
 }
+
+/* ===== ЧИНИМ ВЫХОД ЗА РАМКИ ===== */
+.act, .rec, .hitem, .settings-item, .stats, .hue-wrap,
+.btn-item, .faq-item, .fire-card, .quiz-card, .quiz-result-item, .history-item{
+  overflow: hidden !important;
+}
+
+/* Убираем тонкую верхнюю подсветку, которая торчала */
+.act::after, .rec::after{
+  display: none !important;
+}
+
+/* Убираем любые свечения, которые могут торчать */
+.act .ic, .act .lbl, .act .hint,
+.rec .em, .rec .name, .rec .st{
+  position: relative;
+  z-index: 2;
+}
+
+/* Карточка серии — отрезаем всё, что за границей */
+.fire-card{
+  overflow: hidden !important;
+  position: relative;
+}
+
+/* Огонёк внутри — нормально */
+.fire-wrap{
+  max-width: 100%;
+}
