@@ -73,3 +73,59 @@ body.page-leaving{
   transition:opacity .24s ease !important;
   pointer-events:none;
 }
+
+/* ===== ФИНАЛЬНЫЙ OVERRIDE ===== */
+/* Все цветные кнопки → стеклянные */
+.act.pink, .act.mag, .act.pur, .act.blue, .act.dark{
+  background:color-mix(in srgb, var(--card) 88%, transparent) !important;
+  backdrop-filter:blur(24px) saturate(140%) !important;
+  -webkit-backdrop-filter:blur(24px) saturate(140%) !important;
+  border:1.5px solid transparent !important;
+  box-shadow:0 4px 20px rgba(0,0,0,.12) !important;
+}
+body.theme-soft .act.pink, body.theme-soft .act.mag, body.theme-soft .act.pur,
+body.theme-soft .act.blue, body.theme-soft .act.dark,
+body.theme-day .act.pink, body.theme-day .act.mag, body.theme-day .act.pur,
+body.theme-day .act.blue, body.theme-day .act.dark{
+  background:color-mix(in srgb, var(--card) 92%, transparent) !important;
+  box-shadow:0 4px 20px rgba(0,0,0,.06) !important;
+}
+
+/* Радужный контур на всех кнопках действий */
+.act{
+  position:relative;
+}
+.act::after{
+  content:'';
+  position:absolute;
+  inset:0;
+  border-radius:inherit;
+  padding:1.5px;
+  background:linear-gradient(135deg,var(--pink),var(--mag),var(--pur),var(--blue),var(--pink));
+  background-size:200% 200%;
+  background-position:0% 50%;
+  -webkit-mask:linear-gradient(#fff 0 0) content-box,linear-gradient(#fff 0 0);
+  mask:linear-gradient(#fff 0 0) content-box,linear-gradient(#fff 0 0);
+  -webkit-mask-composite:xor;
+  mask-composite:exclude;
+  pointer-events:none;
+  z-index:1;
+  animation:none !important;
+}
+
+/* Останавливаем анимацию радуги — статичный градиент */
+.grad-border::after{
+  animation:none !important;
+  background-position:0% 50% !important;
+}
+
+/* Убираем мигание от hue-slider */
+.hue-bubble{
+  transition:background .15s ease !important;
+  box-shadow:none !important;
+}
+
+/* Плавный переход цветов у всех кнопок */
+.act{
+  transition:transform .15s ease !important;
+}
