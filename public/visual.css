@@ -477,9 +477,9 @@ html, body{
 }
 
 /* 6. Hue-slider — при движении отключаем анимации на всей странице */
-body.hue-dragging .bg-anim,
-body.hue-dragging .fire-spark,
-body.hue-dragging .fire-ember{
+
+
+
   display: none !important;
 }
 
