@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+<meta name="theme-color" content="#010003">
+<title>Игры — Тепло</title>
+<link href="https://fonts.googleapis.com/css2?family=Lato:wght@400;700;900&family=Roboto+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/themes.css">
+<link rel="stylesheet" href="/theme-fix.css">
+<link rel="stylesheet" href="/theme-smooth.css">
+<link rel="stylesheet" href="/bg-anim.css">
+<link rel="stylesheet" href="/tabbar.css">
+<link rel="stylesheet" href="/quiz.css">
+<style>
+:root{--bg:#010003;--card:#0b0b0e;--border:rgba(255,255,255,.07);--border2:rgba(255,255,255,.14);--text:#fff;--muted:#c7c7c7;--dim:#5f5f68;--pink:#ff2164;--mag:#fb3dff;--pur:#9b23ea;--blue:#5f72bd;--ease:cubic-bezier(.16,1,.3,1)}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+body{margin:0;min-height:100vh;font-family:'Lato',system-ui,sans-serif;background:var(--bg);color:var(--text);-webkit-font-smoothing:antialiased;overflow-x:hidden}
+body::before{content:'';position:fixed;inset:0;background:radial-gradient(circle 500px at 15% -10%,rgba(255,33,100,.09),transparent 70%),radial-gradient(circle 400px at 90% 110%,rgba(155,35,234,.08),transparent 70%);pointer-events:none;z-index:0}
+.app{position:relative;z-index:1;max-width:520px;margin:0 auto;padding:20px 18px 40px}
+.header{display:flex;align-items:center;justify-content:space-between;margin-bottom:22px}
+.brand{display:flex;align-items:center;gap:12px}
+.logo{width:38px;height:38px;border-radius:10px;background:linear-gradient(135deg,var(--pink),var(--mag));display:flex;align-items:center;justify-content:center;font-size:18px;font-weight:900;box-shadow:0 4px 16px rgba(255,33,100,.4)}
+.bname{font-size:15px;font-weight:900}
+.bsub{font-size:10px;color:var(--dim);font-family:'Roboto Mono',monospace;letter-spacing:.1em;text-transform:uppercase}
+.me{padding:8px 14px;background:var(--card);border:1px solid var(--border);border-radius:100px;font-size:13px;font-weight:700}
+.title-big{font-size:26px;font-weight:900;margin:0 0 4px;color:var(--text)}
+.title-sub{font-size:13px;color:var(--dim);margin:0 0 20px;font-family:'Roboto Mono',monospace;letter-spacing:.05em}
+.modal-bg{position:fixed;inset:0;background:rgba(1,0,3,.88);backdrop-filter:blur(14px);z-index:500;display:none;align-items:center;justify-content:center;padding:20px;overflow-y:auto}
+.modal-bg.show{display:flex}
+.modal{background:linear-gradient(145deg,var(--card),var(--bg));border:1.5px solid var(--border2);border-radius:22px;padding:24px;max-width:460px;width:100%;box-shadow:0 30px 80px rgba(0,0,0,.8);max-height:90vh;overflow-y:auto;animation:popIn .4s var(--ease)}
+@keyframes popIn{from{opacity:0;transform:scale(.92)}to{opacity:1;transform:scale(1)}}
+.modal-btns{display:flex;gap:10px;margin-top:20px}
+.modal-btns button{flex:1;padding:14px;font-family:inherit;font-size:14px;font-weight:900;border:none;border-radius:12px;cursor:pointer;transition:transform .15s var(--ease)}
+.modal-btns button:active{transform:scale(.96)}
+.btn-cancel{background:var(--bg);color:var(--dim);border:1.5px solid var(--border2)}
+.btn-ok{background:linear-gradient(145deg,var(--pink),var(--pink-d,#c4184d));color:#fff;box-shadow:0 5px 0 rgba(0,0,0,.35)}
+.input{width:100%;padding:14px 16px;font-size:15px;font-family:inherit;font-weight:600;border:1.5px solid var(--border2);border-radius:12px;background:var(--bg);color:var(--text);outline:none;text-align:center;transition:border-color .25s ease}
+.input:focus{border-color:var(--pink)}
+.toast{position:fixed;top:20px;left:50%;transform:translate(-50%,-130%);padding:14px 22px;background:#fff;color:#0a0a0a;border-radius:14px;font-weight:700;font-size:14px;z-index:1000;max-width:calc(100vw - 40px);transition:transform .5s var(--ease),opacity .3s;opacity:0;box-shadow:0 20px 40px rgba(0,0,0,.5)}
+.toast.show{transform:translate(-50%,0);opacity:1}
+.toast.error{background:#ff2164;color:#fff}
+</style>
+</head>
+<body class="theme-wine">
+<div class="toast" id="toast"></div>
+
+<div class="app">
+  <div class="header">
+    <div class="brand">
+      <div class="logo">🎮</div>
+      <div>
+        <div class="bname">ИГРЫ</div>
+        <div class="bsub">quiz</div>
+      </div>
+    </div>
+    <div class="me"><span id="meE">🦊</span> <span id="meN">—</span></div>
+  </div>
+
+  <h1 class="title-big">🎯 Загадка</h1>
+  <p class="title-sub">проверь, как хорошо тебя знают</p>
+
+  <div class="quiz-tabs">
+    <button class="quiz-tab active" id="tabIn" onclick="switchTab('in')">Мне</button>
+    <button class="quiz-tab" id="tabOut" onclick="switchTab('out')">От меня</button>
+  </div>
+
+  <div id="quizList"></div>
+</div>
+
+<button class="quiz-fab" onclick="openCreate()" title="Создать загадку">+</button>
+
+<!-- МОДАЛКА СОЗДАНИЯ -->
+<div class="modal-bg" id="createModal">
+  <div class="modal" id="createBody"></div>
+</div>
+
+<!-- МОДАЛКА ПРОХОЖДЕНИЯ -->
+<div class="modal-bg" id="playModal">
+  <div class="modal" id="playBody"></div>
+</div>
+
+<script src="/bg-anim.js"></script>
+<script src="/theme.js"></script>
+<script src="/tabbar.js"></script>
+<script src="/quiz.js"></script>
+</body>
+</html>
