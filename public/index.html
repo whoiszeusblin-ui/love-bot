@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+<meta name="theme-color" content="#010003">
+<title>Тепло</title>
+<link href="https://fonts.googleapis.com/css2?family=Lato:wght@400;700;900&family=Roboto+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#010003;--card:#0b0b0e;--border:rgba(255,255,255,.07);--border2:rgba(255,255,255,.14);--text:#fff;--muted:#c7c7c7;--dim:#5f5f68;--pink:#ff2164;--mag:#fb3dff;--pur:#9b23ea;--blue:#5f72bd;--ease:cubic-bezier(.16,1,.3,1)}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+body{margin:0;min-height:100vh;font-family:'Lato',system-ui,sans-serif;background:var(--bg);color:var(--text);-webkit-font-smoothing:antialiased;overflow-x:hidden}
+body::before{content:'';position:fixed;inset:0;background:radial-gradient(circle 500px at 15% -10%,rgba(255,33,100,.09),transparent 70%),radial-gradient(circle 400px at 90% 110%,rgba(155,35,234,.08),transparent 70%);pointer-events:none;z-index:0}
+.app{position:relative;z-index:1;max-width:520px;margin:0 auto;padding:20px 18px 40px}
+.header{display:flex;align-items:center;justify-content:space-between;margin-bottom:26px}
+.brand{display:flex;align-items:center;gap:12px}
+.logo{width:38px;height:38px;border-radius:10px;background:linear-gradient(135deg,var(--pink),var(--mag));display:flex;align-items:center;justify-content:center;font-size:18px;font-weight:900;box-shadow:0 4px 16px rgba(255,33,100,.4)}
+.bname{font-size:15px;font-weight:900;letter-spacing:-.01em}
+.bsub{font-size:10px;color:var(--dim);font-family:'Roboto Mono',monospace;letter-spacing:.1em;text-transform:uppercase}
+.me{padding:8px 14px;background:var(--card);border:1px solid var(--border);border-radius:100px;font-size:13px;font-weight:700}
+.section{margin-bottom:24px}
+.slabel{font-size:11px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--dim);margin-bottom:12px;font-family:'Roboto Mono',monospace;display:flex;align-items:center;gap:8px}
+.slabel::after{content:'';flex:1;height:1px;background:linear-gradient(90deg,var(--border),transparent)}
+.recipients{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.rec{position:relative;padding:18px 14px;background:var(--card);border:1.5px solid var(--border);border-radius:14px;cursor:pointer;color:var(--text);font-family:inherit;text-align:center;transition:all .3s var(--ease);overflow:hidden}
+.rec .em{font-size:26px;display:block;margin-bottom:6px;transition:transform .3s var(--ease)}
+.rec .name{font-size:14px;font-weight:700}
+.rec .st{font-size:10px;font-family:'Roboto Mono',monospace;color:var(--dim);margin-top:4px;display:flex;align-items:center;justify-content:center;gap:5px}
+.rec .dot{width:6px;height:6px;border-radius:50%;background:#444}
+.rec.ready .dot{background:#22c55e;box-shadow:0 0 8px #22c55e}
+.rec.active{border-color:var(--pink);background:linear-gradient(160deg,rgba(255,33,100,.1),rgba(251,61,255,.05));box-shadow:0 0 0 1px rgba(255,33,100,.25),0 8px 28px rgba(255,33,100,.22)}
+.rec.active .em{transform:scale(1.15)}
+.rec.active::before{content:'';position:absolute;top:-50%;right:-50%;width:100%;height:100%;background:radial-gradient(circle,rgba(255,33,100,.4),transparent 70%);animation:pg 2.4s ease-in-out infinite;pointer-events:none}
+@keyframes pg{0%,100%{opacity:.4}50%{opacity:.9}}
+.rec:active{transform:scale(.97)}
+.actions{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.act{position:relative;padding:20px 16px;border-radius:16px;border:none;cursor:pointer;color:#fff;font-family:inherit;text-align:left;display:flex;flex-direction:column;gap:14px;min-height:110px;transition:transform .15s var(--ease);overflow:hidden}
+.act::after{content:'';position:absolute;inset:0;background:linear-gradient(180deg,rgba(255,255,255,.06),transparent 60%);pointer-events:none}
+.act:active{transform:scale(.96) translateY(1px)}
+.act .ic{font-size:26px;line-height:1;position:relative;z-index:1}
+.act .lbl{font-size:14px;font-weight:900;position:relative;z-index:1;line-height:1.25}
+.act .hint{font-size:10px;letter-spacing:.05em;opacity:.7;position:relative;z-index:1;font-family:'Roboto Mono',monospace;text-transform:uppercase;margin-top:auto}
+.act.pink{background:linear-gradient(145deg,#ff2164,#c4184d);box-shadow:0 8px 24px rgba(255,33,100,.3)}
+.act.mag{background:linear-gradient(145deg,#fb3dff,#b71fb5);box-shadow:0 8px 24px rgba(251,61,255,.28)}
+.act.pur{background:linear-gradient(145deg,#9b23ea,#6b16a3);box-shadow:0 8px 24px rgba(155,35,234,.28)}
+.act.blue{background:linear-gradient(145deg,#5f72bd,#3e4d8a);box-shadow:0 8px 24px rgba(95,114,189,.28)}
+.act.dark{background:var(--card);border:1.5px solid var(--border2)}
+.act.dark::after{background:linear-gradient(180deg,rgba(255,255,255,.03),transparent 60%)}
+.act.dark .hint{color:var(--dim);opacity:1}
+.act.span{grid-column:span 2;flex-direction:row;align-items:center;min-height:auto;padding:22px 20px;gap:16px}
+.act.span .lbl{font-size:16px}
+.act.span .ic{font-size:32px}
+.hist{display:flex;flex-direction:column;gap:8px}
+.hempty{padding:22px;text-align:center;color:var(--dim);font-size:13px;border:1.5px dashed var(--border);border-radius:14px}
+.hitem{display:flex;align-items:center;gap:12px;padding:14px 16px;background:var(--card);border:1px solid var(--border);border-radius:12px;animation:si .4s var(--ease) backwards}
+@keyframes si{from{opacity:0;transform:translateX(-8px)}to{opacity:1;transform:translateX(0)}}
+.hitem .he{font-size:20px}
+.hitem .ht{flex:1;font-size:13px;color:var(--muted);line-height:1.3}
+.hitem .ht b{color:var(--text)}
+.hitem .htime{font-size:11px;color:var(--dim);font-family:'Roboto Mono',monospace}
+.stats{display:flex;justify-content:space-around;padding:16px;background:var(--card);border:1px solid var(--border);border-radius:14px;margin-top:8px}
+.stat{text-align:center;flex:1;position:relative}
+.stat+.stat::before{content:'';position:absolute;left:0;top:10%;height:80%;width:1px;background:var(--border)}
+.sv{font-size:20px;font-weight:900;background:linear-gradient(135deg,var(--pink),var(--mag));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.sl{font-size:10px;color:var(--dim);text-transform:uppercase;letter-spacing:.08em;margin-top:4px;font-family:'Roboto Mono',monospace}
+.logout{margin-top:24px;width:100%;padding:14px;background:transparent;border:1.5px solid var(--border);border-radius:12px;color:var(--dim);font-family:inherit;font-size:13px;font-weight:700;cursor:pointer;transition:all .25s var(--ease);letter-spacing:.03em}
+.logout:active{color:var(--pink);border-color:rgba(255,33,100,.4)}
+.toast{position:fixed;top:20px;left:50%;transform:translate(-50%,-130%);padding:14px 22px;background:#fff;color:#0a0a0a;border-radius:14px;font-weight:700;font-size:14px;z-index:1000;max-width:calc(100vw - 40px);text-align:center;transition:transform .5s var(--ease),opacity .3s;opacity:0;box-shadow:0 20px 40px rgba(0,0,0,.5);display:flex;align-items:center;gap:10px}
+.toast.show{transform:translate(-50%,0);opacity:1}
+.toast.error{background:#ff2164;color:#fff}
+.toast .ti{font-size:18px}
+.spark{position:fixed;width:8px;height:8px;border-radius:50%;pointer-events:none;z-index:999;animation:sf .9s var(--ease) forwards}
+@keyframes sf{0%{transform:translate(0,0) scale(.4);opacity:1}100%{transform:translate(var(--dx),var(--dy)) scale(0);opacity:0}}
+.screen{display:none;animation:sc .5s var(--ease)}
+.screen.active{display:block}
+@keyframes sc{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
+.lock{text-align:center;padding:80px 20px}
+.lock .le{font-size:64px;margin-bottom:20px;display:inline-block;animation:fl 3s ease-in-out infinite}
+@keyframes fl{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
+.lock h1{font-size:22px;margin:0 0 12px;font-weight:900}
+.lock p{color:var(--muted);font-size:14px;line-height:1.6;margin:0}
+input[type=file]{display:none}
+</style>
+</head>
+<body>
+<div class="toast" id="toast"><span class="ti" id="toastIc">💖</span><span id="toastText"></span></div>
+<div class="app">
+<div class="screen" id="scrLock"><div class="lock"><span class="le">🔒</span><h1>Нужна персональная ссылка</h1><p>Чтобы войти, открой свою личную ссылку 💕</p></div></div>
+<div class="screen" id="scrMain">
+<div class="header">
+<div class="brand"><div class="logo">T</div><div><div class="bname">ТЕПЛО</div><div class="bsub">direct</div></div></div>
+<div class="me"><span id="meE">🦊</span> <span id="meN">—</span></div>
+</div>
+<div class="section"><div class="slabel">Кому отправить</div><div class="recipients" id="recs"></div></div>
+<div class="section"><div class="slabel">Быстрые действия</div>
+<div class="actions">
+<button class="act pink" onclick="send('💖 Я подумал(а) о тебе прямо сейчас!')"><span class="ic">💖</span><span class="lbl">Подумал о тебе</span><span class="hint">thinking</span></button>
+<button class="act mag" onclick="send('😘 Скучаю по тебе...')"><span class="ic">😘</span><span class="lbl">Скучаю</span><span class="hint">miss you</span></button>
+<button class="act pur" onclick="send('☕ Доброе утро! Пусть день будет тёплым 🌤')"><span class="ic">☕</span><span class="lbl">Доброе утро</span><span class="hint">morning</span></button>
+<button class="act blue" onclick="send('🌙 Спокойной ночи, сладких снов ✨')"><span class="ic">🌙</span><span class="lbl">Спокойной ночи</span><span class="hint">good night</span></button>
+<button class="act dark" onclick="send('🤗 Обнимаю тебя крепко-крепко!')"><span class="ic">🤗</span><span class="lbl">Обнимаю</span><span class="hint">hug</span></button>
+<button class="act dark" onclick="send('⚡ Позвони мне срочно, если можешь 💕')"><span class="ic">⚡</span><span class="lbl">Срочно</span><span class="hint">urgent</span></button>
+<button class="act pink span" onclick="goDraw()"><span class="ic">🎨</span><span><div class="lbl">Нарисовать рисунок</div><div class="hint">нарисуй и отправь</div></span></button>
+<button class="act dark span" onclick="document.getElementById('f').click()"><span class="ic">📸</span><span><div class="lbl">Отправить фото</div><div class="hint">из галереи</div></span></button>
+</div></div>
+<div class="section"><div class="slabel">Недавно отправлено</div><div class="hist" id="hist"></div></div>
+<div class="stats">
+<div class="stat"><div class="sv" id="sToday">0</div><div class="sl">сегодня</div></div>
+<div class="stat"><div class="sv" id="sTotal">0</div><div class="sl">всего</div></div>
+</div>
+<button class="logout" onclick="logout()">Выйти из аккаунта</button>
+</div>
+</div>
+<input type="file" id="f" accept="image/*">
+<script>
+const LS_T='teplo_token_v1',LS_H='teplo_history_v1',LS_S='teplo_stats_v1';
+const $=id=>document.getElementById(id);
+let myToken=null,me=null,allUsers=[],recipient=null;
+const toast=$('toast');
+function ts(text,err,icon){$('toastText').textContent=text;$('toastIc').textContent=icon||(err?'⚠️':'✅');toast.classList.toggle('error',!!err);toast.classList.add('show');clearTimeout(window._t);window._t=setTimeout(()=>toast.classList.remove('show'),2800)}
+function screen(id){document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));$(id).classList.add('active')}
+function vib(p){if(navigator.vibrate)try{navigator.vibrate(p)}catch(e){}}
+async function init(){
+  const p=new URLSearchParams(location.search),ut=p.get('token');
+  if(ut){localStorage.setItem(LS_T,ut);history.replaceState({},'',location.pathname);myToken=ut}
+  else myToken=localStorage.getItem(LS_T);
+  if(!myToken)return screen('scrLock');
+  try{const r=await fetch('/api/me?token='+encodeURIComponent(myToken));if(!r.ok)throw 0;me=(await r.json()).user}
+  catch(e){localStorage.removeItem(LS_T);return screen('scrLock')}
+  await loadUsers();
+  if(!allUsers.length)return ts('Нет других пользователей',1);
+  $('meE').textContent=me.emoji;$('meN').textContent=me.name;
+  recipient=allUsers[0];
+  renderRecs();renderHist();renderStats();screen('scrMain');
+}
+async function loadUsers(){try{const r=await fetch('/api/users?token='+encodeURIComponent(myToken));allUsers=(await r.json()).users||[]}catch(e){allUsers=[]}}
+function renderRecs(){
+  const box=$('recs');box.innerHTML='';
+  allUsers.forEach((u,i)=>{
+    const b=document.createElement('button');
+    b.className='rec'+(recipient&&u.id===recipient.id?' active':'')+(u.ready?' ready':'');
+    b.style.animation=`sc .4s var(--ease) ${i*0.06}s backwards`;
+    b.innerHTML=`<span class="em">${u.emoji}</span><span class="name">${u.name}</span><span class="st"><span class="dot"></span>${u.ready?'готов':'не подключён'}</span>`;
+    b.onclick=()=>{recipient=u;vib(8);renderRecs()};
+    box.appendChild(b);
+  });
+}
+function getHist(){try{return JSON.parse(localStorage.getItem(LS_H)||'[]')}catch(e){return[]}}
+function addHist(it){const l=getHist();l.unshift(it);localStorage.setItem(LS_H,JSON.stringify(l.slice(0,8)));renderHist()}
+function renderHist(){
+  const box=$('hist'),l=getHist();
+  if(!l.length){box.innerHTML='<div class="hempty">Пока пусто. Отправь первое сообщение 💫</div>';return}
+  box.innerHTML='';
+  l.forEach((h,i)=>{const el=document.createElement('div');el.className='hitem';el.style.animationDelay=(i*0.05)+'s';el.innerHTML=`<span class="he">${h.icon}</span><div class="ht">${h.text}</div><div class="htime">${h.time}</div>`;box.appendChild(el)});
+}
+function getStats(){try{return JSON.parse(localStorage.getItem(LS_S)||'{"total":0,"today":0,"date":""}')}catch(e){return{total:0,today:0,date:''}}}
+function bumpStats(){const s=getStats();const t=new Date().toDateString();if(s.date!==t){s.today=0;s.date=t}s.today++;s.total++;localStorage.setItem(LS_S,JSON.stringify(s));renderStats()}
+function renderStats(){const s=getStats();const t=new Date().toDateString();$('sToday').textContent=s.date===t?s.today:0;$('sTotal').textContent=s.total}
+async function send(msg){
+  if(!recipient)return ts('Выбери получателя',1);
+  if(!recipient.ready)return ts(recipient.name+' ещё не подключён',1);
+  vib([10,30,10]);ts('Отправляю...',0,'💫');
+  try{
+    const r=await fetch('/api/send-love',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({token:myToken,to:recipient.id,message:msg})});
+    const d=await r.json();if(!d.ok)throw new Error(d.error);
+    ts('Отправлено '+recipient.name,0,'💖');
+    sparks(window.innerWidth/2,window.innerHeight/2);
+    vib([20,50,20,50,20]);
+    addHist({icon:'💌',text:`Ты → <b>${recipient.name}</b>: ${msg.slice(0,40)}`,time:new Date().toLocaleTimeString('ru-RU',{hour:'2-digit',minute:'2-digit'})});
+    bumpStats();
+  }catch(e){ts(e.message||'Ошибка',1)}
+}
+$('f').onchange=async e=>{
+  const file=e.target.files[0];if(!file)return;
+  if(!recipient||!recipient.ready){ts('Получатель не готов',1);return}
+  ts('Загружаю...',0,'📤');
+  try{
+    const fd=new FormData();fd.append('photo',file);fd.append('token',myToken);fd.append('to',recipient.id);
+    const r=await fetch('/api/send-photo',{method:'POST',body:fd});
+    const d=await r.json();if(!d.ok)throw new Error(d.error);
+    ts('Фото отправлено',0,'📸');
+    addHist({icon:'📸',text:`Ты → <b>${recipient.name}</b>: фото`,time:new Date().toLocaleTimeString('ru-RU',{hour:'2-digit',minute:'2-digit'})});
+    bumpStats();vib(20);
+  }catch(e){ts(e.message,1)}
+  e.target.value='';
+};
+function goDraw(){if(!recipient)return ts('Выбери получателя',1);localStorage.setItem('teplo_draw_recipient',recipient.id);location.href='draw.html?token='+encodeURIComponent(myToken)}
+function sparks(x,y){
+  const c=['#ff2164','#fb3dff','#9b23ea','#5f72bd','#fff'];
+  for(let i=0;i<18;i++){
+    const s=document.createElement('div');s.className='spark';
+    s.style.left=x+'px';s.style.top=y+'px';s.style.background=c[i%c.length];s.style.boxShadow='0 0 10px '+c[i%c.length];
+    const a=(Math.PI*2*i)/18+Math.random()*0.3,d=100+Math.random()*150;
+    s.style.setProperty('--dx',Math.cos(a)*d+'px');s.style.setProperty('--dy',Math.sin(a)*d+'px');
+    s.style.animationDelay=(Math.random()*0.1)+'s';
+    document.body.appendChild(s);setTimeout(()=>s.remove(),1200);
+  }
+}
+function logout(){if(!confirm('Выйти?'))return;localStorage.removeItem(LS_T);location.reload()}
+init();
+</script>
+</body>
+</html>

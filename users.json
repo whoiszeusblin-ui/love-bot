@@ -1,0 +1,7 @@
+{
+  "users": [
+    { "id": "user1", "name": "Максим", "emoji": "🦊", "token": "mx_8k2f9p3d7q1n", "chatId": "5795138942" },
+    { "id": "user2", "name": "Аня",    "emoji": "🌸", "token": "an_4h6j2m8v5c3b", "chatId": "8673697416" },
+    { "id": "user3", "name": "Лиза",   "emoji": "💫", "token": "lz_9r1t7y4u6i0o", "chatId": "" }
+  ]
+}
