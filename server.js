@@ -5,6 +5,7 @@ const fs = require('fs');
 const path = require('path');
 
 const app = express();
+app.use(express.json({ limit: '15mb' }));
 const upload = multer({ storage: multer.memoryStorage(), limits: { fileSize: 10 * 1024 * 1024 } });
 
 const BOT_TOKEN = process.env.TG_BOT_TOKEN;
@@ -272,7 +273,6 @@ app.post('/api/send-photo', upload.single('photo'), async (req, res) => {
 });
 
 /* ============ STATIC ============ */
-app.use(express.json({ limit: '15mb' }));
 app.use(express.static('public'));
 
 /* ============ START ============ */
