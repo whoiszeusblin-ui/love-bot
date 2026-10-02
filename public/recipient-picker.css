@@ -1,0 +1,194 @@
+/* ===== КОМПАКТНЫЙ ВЫБОР ПОЛУЧАТЕЛЯ ===== */
+
+/* Скрываем старый блок .recipients (большие карточки) */
+.section .recipients{ display: none !important; }
+/* И его заголовок тоже скрываем — он не нужен */
+.recipients + .slabel{ display: none !important; }
+
+/* Верхняя панель с кнопкой */
+.rp-bar{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 18px;
+  padding: 10px 4px;
+}
+.rp-label{
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  color: var(--dim);
+  font-family: 'Roboto Mono', monospace;
+}
+.rp-btn{
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 14px 8px 10px;
+  border-radius: 100px;
+  background: rgba(20,20,25,.9);
+  border: 1.5px solid var(--border2);
+  color: var(--text);
+  font-family: inherit;
+  font-size: 13px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all .2s ease;
+  box-shadow: 0 4px 14px rgba(0,0,0,.2);
+  position: relative;
+  overflow: hidden;
+}
+.rp-btn:active{ transform: scale(.96); }
+.rp-btn .rp-em{
+  font-size: 18px;
+  line-height: 1;
+}
+.rp-btn .rp-name{
+  max-width: 100px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.rp-btn .rp-arrow{
+  color: var(--dim);
+  font-size: 10px;
+  margin-left: 2px;
+}
+/* Активный — радужный контур */
+.rp-btn{
+  border: 1.5px solid transparent;
+  background:
+    linear-gradient(rgba(20,20,25,.9), rgba(20,20,25,.9)) padding-box,
+    linear-gradient(135deg, var(--pink), var(--mag), var(--pur), var(--blue), var(--pink)) border-box;
+}
+body.theme-soft .rp-btn, body.theme-day .rp-btn{
+  background:
+    linear-gradient(rgba(255,255,255,.94), rgba(255,255,255,.94)) padding-box,
+    linear-gradient(135deg, var(--pink), var(--mag), var(--pur), var(--blue), var(--pink)) border-box;
+  color: #1a1a1a;
+}
+body.theme-soft .rp-btn .rp-arrow, body.theme-day .rp-btn .rp-arrow{ color: #777; }
+
+/* Статус-точка на кнопке */
+.rp-btn .rp-dot{
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #444;
+  margin-left: -4px;
+}
+.rp-btn.ready .rp-dot{
+  background: #22c55e;
+  box-shadow: 0 0 6px #22c55e;
+}
+
+/* ===== МОДАЛКА ВЫБОРА ===== */
+.rp-modal-bg{
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,.85);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  z-index: 5000;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  animation: rpFade .25s ease;
+}
+.rp-modal-bg.show{ display: flex; }
+@keyframes rpFade{
+  from{ opacity: 0; }
+  to{ opacity: 1; }
+}
+.rp-modal{
+  background: linear-gradient(145deg, var(--card, #0b0b0e), var(--bg, #010003));
+  border: 1.5px solid var(--border2);
+  border-radius: 22px;
+  padding: 22px;
+  max-width: 380px;
+  width: 100%;
+  box-shadow: 0 30px 80px rgba(0,0,0,.7);
+  animation: rpPop .3s cubic-bezier(.34,1.56,.64,1);
+}
+@keyframes rpPop{
+  from{ opacity: 0; transform: scale(.9); }
+  to{ opacity: 1; transform: scale(1); }
+}
+.rp-modal-title{
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  color: var(--dim);
+  font-family: 'Roboto Mono', monospace;
+  text-align: center;
+  margin-bottom: 16px;
+}
+.rp-list{
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-bottom: 14px;
+}
+.rp-item{
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 16px;
+  border-radius: 14px;
+  background: rgba(255,255,255,.04);
+  border: 1.5px solid var(--border);
+  color: var(--text);
+  font-family: inherit;
+  font-size: 15px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all .2s ease;
+  text-align: left;
+}
+.rp-item:active{ transform: scale(.98); }
+.rp-item.active{
+  border-color: transparent;
+  background:
+    linear-gradient(color-mix(in srgb, var(--pink) 16%, rgba(20,20,25,.9)),
+                    color-mix(in srgb, var(--pink) 16%, rgba(20,20,25,.9))) padding-box,
+    linear-gradient(135deg, var(--pink), var(--mag), var(--pur), var(--blue), var(--pink)) border-box;
+}
+body.theme-soft .rp-item, body.theme-day .rp-item{
+  background: rgba(255,255,255,.9);
+  color: #1a1a1a;
+}
+body.theme-soft .rp-item.active, body.theme-day .rp-item.active{
+  background:
+    linear-gradient(color-mix(in srgb, var(--pink) 14%, rgba(255,255,255,.94)),
+                    color-mix(in srgb, var(--pink) 14%, rgba(255,255,255,.94))) padding-box,
+    linear-gradient(135deg, var(--pink), var(--mag), var(--pur), var(--blue), var(--pink)) border-box;
+}
+.rp-item .rp-em{ font-size: 22px; }
+.rp-item .rp-name{ flex: 1; }
+.rp-item .rp-status{
+  font-size: 10px;
+  font-family: 'Roboto Mono', monospace;
+  color: var(--dim);
+  text-transform: uppercase;
+  letter-spacing: .05em;
+}
+.rp-item.active .rp-status{ color: var(--pink); }
+
+.rp-close{
+  width: 100%;
+  padding: 14px;
+  border-radius: 12px;
+  border: 1.5px solid var(--border2);
+  background: transparent;
+  color: var(--dim);
+  font-family: inherit;
+  font-size: 13px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all .2s ease;
+}
+.rp-close:active{ transform: scale(.98); }
