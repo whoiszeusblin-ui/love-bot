@@ -11,16 +11,42 @@
 *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
 body{margin:0;min-height:100vh;font-family:'Lato',system-ui,sans-serif;background:var(--bg);color:var(--text);-webkit-font-smoothing:antialiased;overflow-x:hidden}
 body::before{content:'';position:fixed;inset:0;background:radial-gradient(circle 500px at 15% -10%,rgba(255,33,100,.09),transparent 70%),radial-gradient(circle 400px at 90% 110%,rgba(155,35,234,.08),transparent 70%);pointer-events:none;z-index:0}
-.app{position:relative;z-index:1;max-width:520px;margin:0 auto;padding:20px 18px 40px}
-.header{display:flex;align-items:center;justify-content:space-between;margin-bottom:26px}
+.app{position:relative;z-index:1;max-width:520px;margin:0 auto;padding:20px 18px 80px}
+.header{display:flex;align-items:center;justify-content:space-between;margin-bottom:20px}
 .brand{display:flex;align-items:center;gap:12px}
 .logo{width:38px;height:38px;border-radius:10px;background:linear-gradient(135deg,var(--pink),var(--mag));display:flex;align-items:center;justify-content:center;font-size:18px;font-weight:900;box-shadow:0 4px 16px rgba(255,33,100,.4)}
 .bname{font-size:15px;font-weight:900;letter-spacing:-.01em}
 .bsub{font-size:10px;color:var(--dim);font-family:'Roboto Mono',monospace;letter-spacing:.1em;text-transform:uppercase}
 .me{padding:8px 14px;background:var(--card);border:1px solid var(--border);border-radius:100px;font-size:13px;font-weight:700}
-.section{margin-bottom:24px}
+.section{margin-bottom:22px}
 .slabel{font-size:11px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--dim);margin-bottom:12px;font-family:'Roboto Mono',monospace;display:flex;align-items:center;gap:8px}
 .slabel::after{content:'';flex:1;height:1px;background:linear-gradient(90deg,var(--border),transparent)}
+
+/* ===== ОГОНЁК ===== */
+.fire-card{position:relative;overflow:hidden;background:linear-gradient(145deg,#1a0510,#0d0208);border:1.5px solid rgba(255,33,100,.3);border-radius:20px;padding:22px;text-align:center;box-shadow:0 10px 40px rgba(255,33,100,.2);animation:fadeUp .6s var(--ease) backwards}
+.fire-card::before{content:'';position:absolute;top:-50%;left:-20%;width:140%;height:200%;background:radial-gradient(circle,rgba(255,80,30,.35),transparent 60%);animation:fireGlow 3s ease-in-out infinite;pointer-events:none}
+@keyframes fireGlow{0%,100%{opacity:.5}50%{opacity:1}}
+.fire-card.off{background:linear-gradient(145deg,#0e0e12,#060608);border-color:var(--border2);box-shadow:none}
+.fire-card.off::before{background:radial-gradient(circle,rgba(120,120,120,.15),transparent 60%);animation:none}
+.fire-emoji{font-size:56px;display:inline-block;position:relative;z-index:1;animation:firePulse 1.6s ease-in-out infinite;filter:drop-shadow(0 0 20px rgba(255,80,30,.8))}
+.fire-emoji.cold{animation:none;filter:grayscale(1) opacity(.5);font-size:44px}
+@keyframes firePulse{0%,100%{transform:scale(1) rotate(-2deg)}50%{transform:scale(1.12) rotate(2deg)}}
+.fire-num{position:relative;z-index:1;font-size:46px;font-weight:900;letter-spacing:-.03em;background:linear-gradient(135deg,#ff6a2a,#ff2164,#fb3dff);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;line-height:1;margin-top:6px}
+.fire-label{position:relative;z-index:1;font-size:13px;color:var(--muted);margin-top:6px;font-weight:700}
+.fire-best{position:relative;z-index:1;font-size:11px;color:var(--dim);margin-top:4px;font-family:'Roboto Mono',monospace}
+.fire-btn{position:relative;z-index:1;margin-top:16px;padding:14px 28px;border:none;border-radius:14px;font-family:inherit;font-size:15px;font-weight:900;color:#fff;cursor:pointer;background:linear-gradient(145deg,#ff6a2a,#ff2164);box-shadow:0 6px 0 #7a0d2a,0 10px 24px rgba(255,33,100,.4);transition:transform .15s var(--ease)}
+.fire-btn:active{transform:translateY(5px);box-shadow:0 2px 0 #7a0d2a}
+.fire-btn.done{background:linear-gradient(145deg,#1a1a1e,#0e0e12);color:var(--dim);box-shadow:none;border:1.5px solid var(--border2);cursor:default}
+.fire-btn.done:active{transform:none}
+
+/* ===== НАКАЗАНИЯ ===== */
+.punish-card{background:linear-gradient(145deg,#1a0d05,#0d0603);border:1.5px solid rgba(255,180,60,.35);border-radius:16px;padding:18px;margin-bottom:12px;animation:fadeUp .5s var(--ease) backwards}
+.punish-title{font-size:14px;font-weight:900;color:#ffc04a;display:flex;align-items:center;gap:8px;margin-bottom:8px}
+.punish-text{font-size:13px;color:var(--muted);line-height:1.5;margin-bottom:12px}
+.punish-btn{padding:12px 20px;border:none;border-radius:12px;font-family:inherit;font-size:13px;font-weight:900;color:#fff;cursor:pointer;background:linear-gradient(145deg,#ff9a1a,#ff2164);box-shadow:0 5px 0 #7a3a0d,0 8px 20px rgba(255,150,30,.35);transition:transform .15s var(--ease)}
+.punish-btn:active{transform:translateY(4px);box-shadow:0 2px 0 #7a3a0d}
+
+/* ===== РЕСПОНДЕНТЫ ===== */
 .recipients{display:grid;grid-template-columns:1fr 1fr;gap:10px}
 .rec{position:relative;padding:18px 14px;background:var(--card);border:1.5px solid var(--border);border-radius:14px;cursor:pointer;color:var(--text);font-family:inherit;text-align:center;transition:all .3s var(--ease);overflow:hidden}
 .rec .em{font-size:26px;display:block;margin-bottom:6px;transition:transform .3s var(--ease)}
@@ -33,6 +59,8 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(circle
 .rec.active::before{content:'';position:absolute;top:-50%;right:-50%;width:100%;height:100%;background:radial-gradient(circle,rgba(255,33,100,.4),transparent 70%);animation:pg 2.4s ease-in-out infinite;pointer-events:none}
 @keyframes pg{0%,100%{opacity:.4}50%{opacity:.9}}
 .rec:active{transform:scale(.97)}
+
+/* ===== ДЕЙСТВИЯ ===== */
 .actions{display:grid;grid-template-columns:1fr 1fr;gap:12px}
 .act{position:relative;padding:20px 16px;border-radius:16px;border:none;cursor:pointer;color:#fff;font-family:inherit;text-align:left;display:flex;flex-direction:column;gap:14px;min-height:110px;transition:transform .15s var(--ease);overflow:hidden}
 .act::after{content:'';position:absolute;inset:0;background:linear-gradient(180deg,rgba(255,255,255,.06),transparent 60%);pointer-events:none}
@@ -50,6 +78,8 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(circle
 .act.span{grid-column:span 2;flex-direction:row;align-items:center;min-height:auto;padding:22px 20px;gap:16px}
 .act.span .lbl{font-size:16px}
 .act.span .ic{font-size:32px}
+
+/* ===== ИСТОРИЯ ===== */
 .hist{display:flex;flex-direction:column;gap:8px}
 .hempty{padding:22px;text-align:center;color:var(--dim);font-size:13px;border:1.5px dashed var(--border);border-radius:14px}
 .hitem{display:flex;align-items:center;gap:12px;padding:14px 16px;background:var(--card);border:1px solid var(--border);border-radius:12px;animation:si .4s var(--ease) backwards}
@@ -58,40 +88,102 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(circle
 .hitem .ht{flex:1;font-size:13px;color:var(--muted);line-height:1.3}
 .hitem .ht b{color:var(--text)}
 .hitem .htime{font-size:11px;color:var(--dim);font-family:'Roboto Mono',monospace}
+
+/* ===== СТАТИСТИКА ===== */
 .stats{display:flex;justify-content:space-around;padding:16px;background:var(--card);border:1px solid var(--border);border-radius:14px;margin-top:8px}
 .stat{text-align:center;flex:1;position:relative}
 .stat+.stat::before{content:'';position:absolute;left:0;top:10%;height:80%;width:1px;background:var(--border)}
 .sv{font-size:20px;font-weight:900;background:linear-gradient(135deg,var(--pink),var(--mag));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
 .sl{font-size:10px;color:var(--dim);text-transform:uppercase;letter-spacing:.08em;margin-top:4px;font-family:'Roboto Mono',monospace}
-.logout{margin-top:24px;width:100%;padding:14px;background:transparent;border:1.5px solid var(--border);border-radius:12px;color:var(--dim);font-family:inherit;font-size:13px;font-weight:700;cursor:pointer;transition:all .25s var(--ease);letter-spacing:.03em}
+
+/* ===== ВЫЙТИ ===== */
+.logout{margin-top:22px;width:100%;padding:14px;background:transparent;border:1.5px solid var(--border);border-radius:12px;color:var(--dim);font-family:inherit;font-size:13px;font-weight:700;cursor:pointer;transition:all .25s var(--ease);letter-spacing:.03em}
 .logout:active{color:var(--pink);border-color:rgba(255,33,100,.4)}
+
+/* ===== ВОДЯНОЙ ЗНАК ===== */
+.watermark{position:fixed;bottom:10px;right:12px;z-index:50;font-size:10px;font-family:'Roboto Mono',monospace;color:rgba(255,255,255,.3);text-decoration:none;letter-spacing:.04em;transition:color .25s ease}
+.watermark:hover,.watermark:active{color:rgba(255,255,255,.75)}
+
+/* ===== TOAST ===== */
 .toast{position:fixed;top:20px;left:50%;transform:translate(-50%,-130%);padding:14px 22px;background:#fff;color:#0a0a0a;border-radius:14px;font-weight:700;font-size:14px;z-index:1000;max-width:calc(100vw - 40px);text-align:center;transition:transform .5s var(--ease),opacity .3s;opacity:0;box-shadow:0 20px 40px rgba(0,0,0,.5);display:flex;align-items:center;gap:10px}
 .toast.show{transform:translate(-50%,0);opacity:1}
 .toast.error{background:#ff2164;color:#fff}
-.toast .ti{font-size:18px}
+
+/* ===== SPARKS ===== */
 .spark{position:fixed;width:8px;height:8px;border-radius:50%;pointer-events:none;z-index:999;animation:sf .9s var(--ease) forwards}
 @keyframes sf{0%{transform:translate(0,0) scale(.4);opacity:1}100%{transform:translate(var(--dx),var(--dy)) scale(0);opacity:0}}
+
+/* ===== SCREENS ===== */
 .screen{display:none;animation:sc .5s var(--ease)}
 .screen.active{display:block}
 @keyframes sc{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
+@keyframes fadeUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
 .lock{text-align:center;padding:80px 20px}
 .lock .le{font-size:64px;margin-bottom:20px;display:inline-block;animation:fl 3s ease-in-out infinite}
 @keyframes fl{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
 .lock h1{font-size:22px;margin:0 0 12px;font-weight:900}
 .lock p{color:var(--muted);font-size:14px;line-height:1.6;margin:0}
 input[type=file]{display:none}
+
+/* ===== МОДАЛ ===== */
+.modal-bg{position:fixed;inset:0;background:rgba(1,0,3,.85);backdrop-filter:blur(14px);z-index:2000;display:none;align-items:center;justify-content:center;padding:20px}
+.modal-bg.show{display:flex;animation:sc .3s var(--ease)}
+.modal{background:linear-gradient(145deg,#0f0f14,#060609);border:1.5px solid rgba(255,150,30,.35);border-radius:20px;padding:24px;max-width:420px;width:100%;box-shadow:0 30px 80px rgba(0,0,0,.8)}
+.modal-title{font-size:16px;font-weight:900;color:#ffc04a;margin:0 0 6px;text-align:center}
+.modal-sub{font-size:13px;color:var(--muted);margin:0 0 16px;text-align:center;line-height:1.5}
+.modal-input{width:100%;padding:14px 16px;font-size:15px;font-family:inherit;font-weight:500;border:1.5px solid var(--border2);border-radius:12px;background:#0a0a0d;color:#fff;outline:none;transition:border-color .25s;text-align:center}
+.modal-input:focus{border-color:#ff9a1a}
+.modal-btns{display:flex;gap:10px;margin-top:14px}
+.modal-btns button{flex:1;padding:14px;font-family:inherit;font-size:14px;font-weight:900;border:none;border-radius:12px;cursor:pointer;transition:transform .15s var(--ease)}
+.modal-btns button:active{transform:scale(.96)}
+.btn-cancel{background:#0a0a0d;color:var(--dim);border:1.5px solid var(--border2)}
+.btn-ok{background:linear-gradient(145deg,#ff9a1a,#ff2164);color:#fff;box-shadow:0 5px 0 #7a3a0d}
+
+/* ===== ОГОНЁК НА ВЕСЬ ЭКРАН ===== */
+.fullscreen-fire{position:fixed;inset:0;background:radial-gradient(circle at 50% 50%,#2a0a12 0%,#010003 70%);z-index:3000;display:none;align-items:center;justify-content:center;padding:30px;text-align:center;flex-direction:column}
+.fullscreen-fire.show{display:flex;animation:sc .5s var(--ease)}
+.fullscreen-fire .big-fire{font-size:120px;display:inline-block;animation:fireBig 1.4s ease-in-out infinite;filter:drop-shadow(0 0 40px rgba(255,80,30,.9))}
+@keyframes fireBig{0%,100%{transform:scale(1) rotate(-3deg)}50%{transform:scale(1.15) rotate(3deg)}}
+.fullscreen-fire h2{font-size:26px;font-weight:900;margin:16px 0 8px;background:linear-gradient(135deg,#ff6a2a,#ff2164,#fb3dff);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.fullscreen-fire p{color:var(--muted);font-size:15px;line-height:1.5;margin:0 0 24px;max-width:340px}
+.fullscreen-fire .ff-btns{display:flex;flex-direction:column;gap:12px;width:100%;max-width:320px}
+.fullscreen-fire .ff-btn{padding:16px;border:none;border-radius:14px;font-family:inherit;font-size:15px;font-weight:900;color:#fff;cursor:pointer;background:linear-gradient(145deg,#ff6a2a,#ff2164);box-shadow:0 6px 0 #7a0d2a,0 10px 24px rgba(255,33,100,.4);transition:transform .15s var(--ease)}
+.fullscreen-fire .ff-btn:active{transform:translateY(5px);box-shadow:0 2px 0 #7a0d2a}
+.fullscreen-fire .ff-skip{padding:12px;background:transparent;border:none;color:var(--dim);font-family:inherit;font-size:13px;font-weight:700;cursor:pointer}
+.fullscreen-fire .ff-skip:hover,.fullscreen-fire .ff-skip:active{color:#fff}
 </style>
-<link rel="manifest" href="/manifest.json"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"><meta name="apple-mobile-web-app-title" content="Тепло"><link rel="apple-touch-icon" href="/icon-192.svg"><link rel="icon" type="image/svg+xml" href="/icon-192.svg"></head>
+</head>
 <body>
 <div class="toast" id="toast"><span class="ti" id="toastIc">💖</span><span id="toastText"></span></div>
-<div class="app">
+
+<!-- ЭКРАН: замок -->
 <div class="screen" id="scrLock"><div class="lock"><span class="le">🔒</span><h1>Нужна персональная ссылка</h1><p>Чтобы войти, открой свою личную ссылку 💕</p></div></div>
+
+<!-- ГЛАВНЫЙ ЭКРАН -->
 <div class="screen" id="scrMain">
+<div class="app">
 <div class="header">
 <div class="brand"><div class="logo">T</div><div><div class="bname">ТЕПЛО</div><div class="bsub">direct</div></div></div>
 <div class="me"><span id="meE">🦊</span> <span id="meN">—</span></div>
 </div>
+
+<div class="section"><div class="slabel">Твоя серия</div>
+<div class="fire-card off" id="fireCard">
+  <div class="fire-emoji cold" id="fireEmoji">🔥</div>
+  <div class="fire-num" id="fireNum">0</div>
+  <div class="fire-label" id="fireLabel">Начни серию сегодня!</div>
+  <div class="fire-best" id="fireBest"></div>
+  <button class="fire-btn" id="fireBtn" onclick="doCheckin()">🔥 Отметить день</button>
+</div>
+</div>
+
+<div class="section" id="punishSection" style="display:none">
+  <div class="slabel">Пропуски</div>
+  <div id="punishList"></div>
+</div>
+
 <div class="section"><div class="slabel">Кому отправить</div><div class="recipients" id="recs"></div></div>
+
 <div class="section"><div class="slabel">Быстрые действия</div>
 <div class="actions">
 <button class="act pink" onclick="send('💖 Я подумал(а) о тебе прямо сейчас!')"><span class="ic">💖</span><span class="lbl">Подумал о тебе</span><span class="hint">thinking</span></button>
@@ -102,24 +194,59 @@ input[type=file]{display:none}
 <button class="act dark" onclick="send('⚡ Позвони мне срочно, если можешь 💕')"><span class="ic">⚡</span><span class="lbl">Срочно</span><span class="hint">urgent</span></button>
 <button class="act pink span" onclick="goDraw()"><span class="ic">🎨</span><span><div class="lbl">Нарисовать рисунок</div><div class="hint">нарисуй и отправь</div></span></button>
 <button class="act dark span" onclick="document.getElementById('f').click()"><span class="ic">📸</span><span><div class="lbl">Отправить фото</div><div class="hint">из галереи</div></span></button>
-</div></div>
+</div>
+</div>
+
 <div class="section"><div class="slabel">Недавно отправлено</div><div class="hist" id="hist"></div></div>
+
 <div class="stats">
 <div class="stat"><div class="sv" id="sToday">0</div><div class="sl">сегодня</div></div>
 <div class="stat"><div class="sv" id="sTotal">0</div><div class="sl">всего</div></div>
 </div>
+
 <button class="logout" onclick="logout()">Выйти из аккаунта</button>
 </div>
 </div>
+
 <input type="file" id="f" accept="image/*">
+
+<!-- МОДАЛ: НАКАЗАНИЕ -->
+<div class="modal-bg" id="punishModal">
+<div class="modal">
+<div class="modal-title">😈 Назначить наказание</div>
+<div class="modal-sub" id="punishModalSub">—</div>
+<input class="modal-input" id="punishInput" placeholder="Что за наказание?" autocomplete="off">
+<div class="modal-btns">
+<button class="btn-cancel" onclick="closePunish()">Отмена</button>
+<button class="btn-ok" onclick="submitPunish()">Отправить</button>
+</div>
+</div>
+</div>
+
+<!-- ОГОНЁК НА ВЕСЬ ЭКРАН -->
+<div class="fullscreen-fire" id="fullFire">
+<div class="big-fire">🔥</div>
+<h2 id="fullFireTitle">—</h2>
+<p id="fullFireText">—</p>
+<div class="ff-btns">
+<button class="ff-btn" id="fullFireBtn" onclick="doCheckin()">🔥 Отметить день</button>
+<button class="ff-skip" onclick="closeFullFire()">Позже</button>
+</div>
+</div>
+
+<a class="watermark" href="https://t.me/aSp1rit" target="_blank" rel="noopener">by @aSp1rit</a>
+
 <script>
 const LS_T='teplo_token_v1',LS_H='teplo_history_v1',LS_S='teplo_stats_v1';
 const $=id=>document.getElementById(id);
 let myToken=null,me=null,allUsers=[],recipient=null;
+let streaksData=null, todayStr=null;
+let punishTargetId=null;
 const toast=$('toast');
 function ts(text,err,icon){$('toastText').textContent=text;$('toastIc').textContent=icon||(err?'⚠️':'✅');toast.classList.toggle('error',!!err);toast.classList.add('show');clearTimeout(window._t);window._t=setTimeout(()=>toast.classList.remove('show'),2800)}
 function screen(id){document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));$(id).classList.add('active')}
 function vib(p){if(navigator.vibrate)try{navigator.vibrate(p)}catch(e){}}
+
 async function init(){
   const p=new URLSearchParams(location.search),ut=p.get('token');
   if(ut){localStorage.setItem(LS_T,ut);history.replaceState({},'',location.pathname);myToken=ut}
@@ -131,9 +258,167 @@ async function init(){
   if(!allUsers.length)return ts('Нет других пользователей',1);
   $('meE').textContent=me.emoji;$('meN').textContent=me.name;
   recipient=allUsers[0];
-  renderRecs();renderHist();renderStats();screen('scrMain');
+  renderRecs();renderHist();renderStats();
+  screen('scrMain');
+  await loadStreaks();
+  maybeShowFullFire();
 }
+
 async function loadUsers(){try{const r=await fetch('/api/users?token='+encodeURIComponent(myToken));allUsers=(await r.json()).users||[]}catch(e){allUsers=[]}}
+
+async function loadStreaks(){
+  try{
+    const r=await fetch('/api/streaks?token='+encodeURIComponent(myToken));
+    const d=await r.json();
+    streaksData=d;
+    todayStr=d.today;
+    renderFire(d.me,d.today);
+    renderPunish(d);
+  }catch(e){}
+}
+
+/* ===== ОГОНЁК ===== */
+function renderFire(s,today){
+  if(!s)return;
+  const card=$('fireCard'),em=$('fireEmoji'),num=$('fireNum'),lbl=$('fireLabel'),best=$('fireBest'),btn=$('fireBtn');
+  const isToday = s.lastCheckIn === today;
+  const active = s.current > 0;
+  num.textContent = s.current;
+  if(active){
+    card.classList.remove('off');
+    em.classList.remove('cold');
+    lbl.textContent = 'дней подряд 🔥';
+  } else {
+    card.classList.add('off');
+    em.classList.add('cold');
+    lbl.textContent = 'Начни серию сегодня!';
+  }
+  if(s.best && s.best > 0) best.textContent = 'рекорд: ' + s.best + ' дней';
+  else best.textContent = '';
+  if(isToday){
+    btn.classList.add('done');
+    btn.textContent = '✓ Отмечено сегодня';
+  } else {
+    btn.classList.remove('done');
+    btn.textContent = '🔥 Отметить день';
+  }
+}
+
+/* ===== ПРОПУСКИ ===== */
+function renderPunish(d){
+  const sec=$('punishSection'),list=$('punishList');
+  const missed=[];
+  if(d.streaks){
+    Object.keys(d.streaks).forEach(id=>{
+      if(id===me.id)return;
+      const s=d.streaks[id];
+      if(s && s.missed) missed.push({id,s});
+    });
+  }
+  if(!missed.length){sec.style.display='none';return}
+  sec.style.display='block';
+  list.innerHTML='';
+  missed.forEach(({id,s},i)=>{
+    const card=document.createElement('div');
+    card.className='punish-card';
+    card.style.animationDelay=(i*0.08)+'s';
+    card.innerHTML=`
+      <div class="punish-title">😈 ${s.emoji||''} ${s.name} пропустил(а) день</div>
+      <div class="punish-text">Назначь наказание — оно придёт ${s.name} в Telegram</div>
+      <button class="punish-btn" onclick="openPunish('${id}','${s.name}','${s.emoji||''}')">Назначить наказание</button>
+    `;
+    list.appendChild(card);
+  });
+}
+
+function openPunish(id,name,emoji){
+  punishTargetId=id;
+  $('punishModalSub').textContent=`Наказание для ${emoji} ${name}`;
+  $('punishInput').value='';
+  $('punishModal').classList.add('show');
+  setTimeout(()=>$('punishInput').focus(),300);
+}
+function closePunish(){$('punishModal').classList.remove('show');punishTargetId=null}
+async function submitPunish(){
+  const text=$('punishInput').value.trim();
+  if(!text){ts('Напиши наказание',1);return}
+  if(!punishTargetId){closePunish();return}
+  try{
+    ts('Отправляю...',0,'📤');
+    const r=await fetch('/api/punish',{
+      method:'POST',headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({token:myToken,to:punishTargetId,text})
+    });
+    const d=await r.json();
+    if(!d.ok) throw new Error(d.error);
+    ts('Наказание назначено 😈',0,'😈');
+    closePunish();
+    vib([30,50,30]);
+    await loadStreaks();
+  }catch(e){ts(e.message||'Ошибка',1)}
+}
+$('punishModal').addEventListener('click',e=>{if(e.target.id==='punishModal')closePunish()});
+
+/* ===== ВСПЛЫВАЮЩИЙ ОГОНЁК ===== */
+function maybeShowFullFire(){
+  if(!streaksData||!streaksData.me)return;
+  const s=streaksData.me;
+  if(s.lastCheckIn===todayStr)return;
+  if(localStorage.getItem('teplo_fire_shown_'+todayStr))return;
+  const lastShown=localStorage.getItem('teplo_fire_last');
+  if(lastShown===todayStr)return;
+  setTimeout(()=>{
+    $('fullFireTitle').textContent = s.current>0 ? `Твоя серия: ${s.current}!` : 'Новый день — начни серию!';
+    $('fullFireText').textContent = s.current>0
+      ? 'Отметь сегодняшний день, чтобы серия не сбросилась 💕'
+      : 'Отмечай каждый день — огонёк будет расти 🔥';
+    $('fullFire').classList.add('show');
+    localStorage.setItem('teplo_fire_last',todayStr);
+  },1200);
+}
+function closeFullFire(){
+  $('fullFire').classList.remove('show');
+  localStorage.setItem('teplo_fire_shown_'+todayStr,'1');
+}
+
+/* ===== ОТМЕТИТЬ ДЕНЬ ===== */
+async function doCheckin(){
+  try{
+    const r=await fetch('/api/checkin',{
+      method:'POST',headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({token:myToken})
+    });
+    const d=await r.json();
+    if(!d.ok)throw new Error(d.error);
+    if(d.already){
+      ts('Уже отмечено сегодня ✓',0,'✓');
+      closeFullFire();
+      return;
+    }
+    // show big fire animation
+    $('fullFire').classList.add('show');
+    $('fullFireTitle').textContent='🔥 +1 день!';
+    $('fullFireText').textContent=`Серия: ${d.current} ${dayWord(d.current)}`;
+    $('fullFireBtn').style.display='none';
+    vibrate([30,50,30,50,30]);
+    sparks(window.innerWidth/2,window.innerHeight/2);
+    if(d.achievement){
+      setTimeout(()=>{
+        $('fullFireTitle').textContent='🏆 '+d.achievement.name;
+        $('fullFireText').textContent='Новое достижение открыто!';
+      }, 1200);
+    }
+    setTimeout(()=>{
+      $('fullFire').classList.remove('show');
+      $('fullFireBtn').style.display='';
+      localStorage.setItem('teplo_fire_shown_'+todayStr,'1');
+    }, 2600);
+    await loadStreaks();
+  }catch(e){ts(e.message||'Ошибка',1)}
+}
+function dayWord(n){const m10=n%10,m100=n%100;if(m10===1&&m100!==11)return 'день';if(m10>=2&&m10<=4&&(m100<12||m100>14))return 'дня';return 'дней'}
+
+/* ===== ОСТАЛЬНОЕ ===== */
 function renderRecs(){
   const box=$('recs');box.innerHTML='';
   allUsers.forEach((u,i)=>{
@@ -185,19 +470,14 @@ $('f').onchange=async e=>{
   e.target.value='';
 };
 function goDraw(){if(!recipient)return ts('Выбери получателя',1);localStorage.setItem('teplo_draw_recipient',recipient.id);location.href='draw.html?token='+encodeURIComponent(myToken)}
-function sparks(x,y){
-  const c=['#ff2164','#fb3dff','#9b23ea','#5f72bd','#fff'];
-  for(let i=0;i<18;i++){
-    const s=document.createElement('div');s.className='spark';
-    s.style.left=x+'px';s.style.top=y+'px';s.style.background=c[i%c.length];s.style.boxShadow='0 0 10px '+c[i%c.length];
-    const a=(Math.PI*2*i)/18+Math.random()*0.3,d=100+Math.random()*150;
-    s.style.setProperty('--dx',Math.cos(a)*d+'px');s.style.setProperty('--dy',Math.sin(a)*d+'px');
-    s.style.animationDelay=(Math.random()*0.1)+'s';
-    document.body.appendChild(s);setTimeout(()=>s.remove(),1200);
-  }
-}
+function sparks(x,y){const c=['#ff2164','#fb3dff','#9b23ea','#5f72bd','#fff'];for(let i=0;i<18;i++){const s=document.createElement('div');s.className='spark';s.style.left=x+'px';s.style.top=y+'px';s.style.background=c[i%c.length];s.style.boxShadow='0 0 10px '+c[i%c.length];const a=(Math.PI*2*i)/18+Math.random()*0.3,d=100+Math.random()*150;s.style.setProperty('--dx',Math.cos(a)*d+'px');s.style.setProperty('--dy',Math.sin(a)*d+'px');s.style.animationDelay=(Math.random()*0.1)+'s';document.body.appendChild(s);setTimeout(()=>s.remove(),1200)}}
 function logout(){if(!confirm('Выйти?'))return;localStorage.removeItem(LS_T);location.reload()}
+
+/* ===== ENTER для модалки ===== */
+$('punishInput').addEventListener('keydown',e=>{if(e.key==='Enter'){e.preventDefault();submitPunish()}});
+
 init();
 </script>
-<script src="/pwa-init.js"></script></body>
+<script src="/pwa-init.js"></script>
+</body>
 </html>
