@@ -62,11 +62,11 @@
 
   /* ===== Улучшения — glass + gradient borders ===== */
   function enhance(){
-    const glassSel = '.modal, .hue-wrap, .stats, .btn-item, .faq-item, .settings-item, .pick .pc, .picker-card, .cl-modal';
+    const glassSel = '.modal, .hue-wrap, .stats, .btn-item, .faq-item, .settings-item, .pick .pc, .picker-card, .cl-modal, .rec, .act.dark, .hitem, .hempty, .fire-card.off, .quiz-card, .quiz-result-item, .history-item';
     document.querySelectorAll(glassSel).forEach(function(el){
       el.classList.add('glass');
     });
-    const borderSel = '.settings-item, .hue-wrap, .btn-item, .faq-item';
+    const borderSel = '.settings-item, .hue-wrap, .btn-item, .faq-item, .rec, .stats';
     document.querySelectorAll(borderSel).forEach(function(el){
       el.classList.add('grad-border');
     });
