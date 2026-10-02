@@ -570,3 +570,36 @@ body.theme-day .quiz-card, body.theme-day .quiz-result-item, body.theme-day .his
 
 /* Но контент карточек выше фона */
 .app{ position: relative; z-index: 1; }
+
+/* ===== ВОЗВРАЩАЕМ ЗАКРУГЛЕНИЯ ===== */
+.act{ border-radius: 16px !important; }
+.rec{ border-radius: 14px !important; }
+.hitem, .btn-item, .history-item{ border-radius: 12px !important; }
+.settings-item, .faq-item, .stats, .quiz-result-item{ border-radius: 14px !important; }
+.hue-wrap, .quiz-card{ border-radius: 16px !important; }
+.fire-card{ border-radius: 20px !important; }
+
+/* ===== УБИРАЕМ PULSE-ПОЛОСКУ СПРАВА ===== */
+.rec.active::before{
+  display: none !important;
+  content: none !important;
+  background: none !important;
+  animation: none !important;
+}
+.rec::before, .rec::after{
+  display: none !important;
+  content: none !important;
+}
+
+/* Убираем внутренний inset-shadow, если он торчит по краям */
+.rec.active{
+  box-shadow:
+    0 8px 28px var(--fire-glow),
+    0 0 0 1.5px var(--pink) !important;
+}
+
+/* На всякий случай — на всех карточках */
+.rec, .rec.active, .act, .act.custom{
+  overflow: hidden !important;
+  isolation: isolate;
+}
