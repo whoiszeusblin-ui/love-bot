@@ -1,0 +1,96 @@
+/* ===== ЖИВОЙ ОГОНЬ ===== */
+.fire-wrap{
+  position:relative;
+  display:inline-block;
+  padding:0 20px;
+}
+.fire-wrap .fire-emoji{
+  position:relative;
+  z-index:2;
+  animation:fireDance 0.9s ease-in-out infinite !important;
+  filter:drop-shadow(0 0 22px var(--fire-glow)) drop-shadow(0 0 40px var(--pink)) !important;
+}
+@keyframes fireDance{
+  0%,100%{transform:translate(0,0) rotate(-3deg) scale(1)}
+  25%{transform:translate(1px,-2px) rotate(2deg) scale(1.04)}
+  50%{transform:translate(-1px,-1px) rotate(-2deg) scale(0.98)}
+  75%{transform:translate(2px,0) rotate(3deg) scale(1.02)}
+}
+
+.fire-wrap .fire-emoji.cold{
+  animation:none !important;
+  filter:grayscale(1) opacity(.5) !important;
+}
+
+/* Свечение под огнём (угли) */
+.fire-glow{
+  position:absolute;
+  bottom:-8px;
+  left:50%;
+  transform:translateX(-50%);
+  width:110px;
+  height:36px;
+  border-radius:50%;
+  background:radial-gradient(ellipse at center,
+    var(--pink) 0%,
+    color-mix(in srgb, var(--pink) 60%, transparent) 40%,
+    transparent 75%);
+  filter:blur(14px);
+  opacity:.55;
+  animation:fireGlowPulse 2.2s ease-in-out infinite;
+  pointer-events:none;
+  z-index:1;
+}
+@keyframes fireGlowPulse{
+  0%,100%{transform:translateX(-50%) scale(1); opacity:.45}
+  50%{transform:translateX(-50%) scale(1.15); opacity:.75}
+}
+.fire-wrap.cold .fire-glow{
+  animation:none;
+  opacity:.15;
+  filter:blur(14px) grayscale(1);
+}
+
+/* Искры */
+.fire-spark{
+  position:absolute;
+  bottom:18%;
+  left:50%;
+  width:5px;
+  height:5px;
+  border-radius:50%;
+  background:radial-gradient(circle, #fff 0%, var(--pink) 40%, transparent 75%);
+  pointer-events:none;
+  z-index:3;
+  animation:fireSparkRise 1.6s cubic-bezier(.22,1,.36,1) forwards;
+  will-change:transform,opacity;
+}
+@keyframes fireSparkRise{
+  0%{transform:translate(-50%,0) scale(0.4); opacity:0}
+  15%{opacity:1}
+  70%{opacity:.85}
+  100%{transform:translate(calc(-50% + var(--dx)), var(--dy)) scale(0); opacity:0}
+}
+
+/* Мелкие угольки — медленнее, тусклее */
+.fire-ember{
+  position:absolute;
+  bottom:14%;
+  left:50%;
+  width:3px;
+  height:3px;
+  border-radius:50%;
+  background:radial-gradient(circle, #ffb870 0%, #ff6a2a 50%, transparent 80%);
+  pointer-events:none;
+  z-index:2;
+  animation:fireEmberRise 2.6s ease-out forwards;
+}
+@keyframes fireEmberRise{
+  0%{transform:translate(-50%,0); opacity:0}
+  20%{opacity:.7}
+  100%{transform:translate(calc(-50% + var(--dx)), var(--dy)); opacity:0}
+}
+
+/* На светлых темах свечение мягче */
+body.theme-soft .fire-glow,
+body.theme-day .fire-glow{opacity:.35}
