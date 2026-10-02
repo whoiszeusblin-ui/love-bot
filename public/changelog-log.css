@@ -1,0 +1,14 @@
+.cl-log-modal{max-width:480px}
+.cl-log-head{display:flex;align-items:center;gap:10px;margin-bottom:18px}
+.cl-log-icon{font-size:28px}
+.cl-log-title{font-size:18px;font-weight:900;color:var(--text);flex:1}
+.cl-log-count{font-size:11px;padding:4px 10px;background:var(--pink);color:#fff;border-radius:20px;font-family:'Roboto Mono',monospace;font-weight:700}
+.cl-log-list{display:flex;flex-direction:column;gap:14px;max-height:60vh;overflow-y:auto;padding-right:4px}
+.cl-log-item{background:var(--bg);border:1.5px solid var(--border);border-radius:14px;padding:16px 18px;position:relative;overflow:hidden}
+.cl-log-item.latest{border-color:var(--pink);box-shadow:0 0 20px var(--fire-glow,rgba(255,33,100,.2))}
+.cl-log-item.latest::before{content:'НОВОЕ';position:absolute;top:10px;right:12px;font-size:9px;font-weight:900;letter-spacing:.1em;color:var(--pink);font-family:'Roboto Mono',monospace}
+.cl-log-date{font-size:11px;color:var(--dim);font-family:'Roboto Mono',monospace;letter-spacing:.08em;text-transform:uppercase;margin-bottom:4px}
+.cl-log-ttl{font-size:15px;font-weight:900;color:var(--pink);margin-bottom:10px}
+.cl-log-changes{list-style:none;padding:0;margin:0}
+.cl-log-changes li{padding:6px 0;font-size:13px;color:var(--muted);line-height:1.4;padding-left:16px;position:relative}
+.cl-log-changes li::before{content:'•';position:absolute;left:4px;color:var(--pink);font-weight:900}
