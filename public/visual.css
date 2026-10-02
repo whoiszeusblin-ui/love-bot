@@ -129,3 +129,65 @@ body.theme-day .act.blue, body.theme-day .act.dark{
 .act{
   transition:transform .15s ease !important;
 }
+
+/* ===== ФИНАЛЬНАЯ КОРРЕКЦИЯ ===== */
+
+/* 1. Прячем частицы фона — это они дают «пятна» */
+.bg-anim .particle{display:none !important}
+
+/* 2. Полноценное стекло на кнопках: светлая подсветка + сильный блюр */
+.act.pink, .act.mag, .act.pur, .act.blue, .act.dark{
+  background:rgba(255,255,255,0.06) !important;
+  backdrop-filter:blur(40px) saturate(180%) !important;
+  -webkit-backdrop-filter:blur(40px) saturate(180%) !important;
+  border:none !important;
+  box-shadow:
+    0 8px 32px rgba(0,0,0,.22),
+    inset 0 0 0 1px rgba(255,255,255,.08),
+    inset 0 1px 0 rgba(255,255,255,.12) !important;
+}
+
+/* На светлых темах — белое матовое стекло */
+body.theme-soft .act.pink, body.theme-soft .act.mag, body.theme-soft .act.pur,
+body.theme-soft .act.blue, body.theme-soft .act.dark,
+body.theme-day .act.pink, body.theme-day .act.mag, body.theme-day .act.pur,
+body.theme-day .act.blue, body.theme-day .act.dark{
+  background:rgba(255,255,255,0.55) !important;
+  box-shadow:
+    0 8px 32px rgba(0,0,0,.08),
+    inset 0 0 0 1px rgba(255,255,255,.7) !important;
+}
+
+/* 3. Полноценное стекло на карточках получателя, истории, настроек */
+.rec, .hitem, .settings-item, .stats, .hue-wrap, .btn-item, .faq-item, .fire-card.off{
+  background:rgba(255,255,255,0.06) !important;
+  backdrop-filter:blur(40px) saturate(180%) !important;
+  -webkit-backdrop-filter:blur(40px) saturate(180%) !important;
+  box-shadow:
+    0 8px 32px rgba(0,0,0,.18),
+    inset 0 0 0 1px rgba(255,255,255,.06) !important;
+}
+body.theme-soft .rec, body.theme-soft .hitem, body.theme-soft .settings-item,
+body.theme-soft .stats, body.theme-soft .hue-wrap, body.theme-soft .btn-item,
+body.theme-soft .faq-item, body.theme-soft .fire-card.off,
+body.theme-day .rec, body.theme-day .hitem, body.theme-day .settings-item,
+body.theme-day .stats, body.theme-day .hue-wrap, body.theme-day .btn-item,
+body.theme-day .faq-item, body.theme-day .fire-card.off{
+  background:rgba(255,255,255,0.55) !important;
+  box-shadow:
+    0 8px 32px rgba(0,0,0,.06),
+    inset 0 0 0 1px rgba(255,255,255,.65) !important;
+}
+
+/* 4. Активный получатель — мягкий цветной оттенок вместо «плашки» */
+.rec.active{
+  background:color-mix(in srgb, var(--pink) 18%, rgba(255,255,255,.06)) !important;
+  box-shadow:
+    0 8px 32px var(--fire-glow),
+    0 0 0 1.5px var(--pink),
+    inset 0 0 0 1px rgba(255,255,255,.15) !important;
+}
+.rec.active::before{
+  background:radial-gradient(circle,var(--pink),transparent 75%) !important;
+  opacity:.35 !important;
+}
