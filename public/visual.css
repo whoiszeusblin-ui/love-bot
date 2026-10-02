@@ -384,3 +384,18 @@ body.theme-day .act::after, body.theme-day .rec::after{
   pointer-events:none;
   z-index:2;
 }
+
+/* ===== ВОЗВРАЩАЕМ ФОН ===== */
+.bg-anim .blob{
+  display:block !important;
+  opacity:0.22 !important;
+  filter:blur(90px) !important;
+}
+body.theme-soft .bg-anim .blob,
+body.theme-day .bg-anim .blob{
+  opacity:0.14 !important;
+}
+
+.bg-anim .particle{
+  display:block !important;
+}
