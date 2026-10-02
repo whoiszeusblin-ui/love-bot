@@ -81,7 +81,7 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(circle
 .lock p{color:var(--muted);font-size:14px;line-height:1.6;margin:0}
 input[type=file]{display:none}
 </style>
-</head>
+<link rel="manifest" href="/manifest.json"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"><meta name="apple-mobile-web-app-title" content="Тепло"><link rel="apple-touch-icon" href="/icon-192.svg"><link rel="icon" type="image/svg+xml" href="/icon-192.svg"></head>
 <body>
 <div class="toast" id="toast"><span class="ti" id="toastIc">💖</span><span id="toastText"></span></div>
 <div class="app">
@@ -199,5 +199,5 @@ function sparks(x,y){
 function logout(){if(!confirm('Выйти?'))return;localStorage.removeItem(LS_T);location.reload()}
 init();
 </script>
-</body>
+<script src="/pwa-init.js"></script></body>
 </html>

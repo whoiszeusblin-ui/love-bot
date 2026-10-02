@@ -1,0 +1,16 @@
+{
+  "name": "Тепло — отправляй близким",
+  "short_name": "Тепло",
+  "description": "Тёплые сообщения, рисунки и фото для близких",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#010003",
+  "theme_color": "#010003",
+  "lang": "ru",
+  "icons": [
+    { "src": "/icon-192.svg", "sizes": "192x192", "type": "image/svg+xml", "purpose": "any" },
+    { "src": "/icon-512.svg", "sizes": "512x512", "type": "image/svg+xml", "purpose": "any" }
+  ]
+}
