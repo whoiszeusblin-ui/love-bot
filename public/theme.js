@@ -160,6 +160,8 @@
     document.getElementById('cpValG').textContent = g;
     document.getElementById('cpValB').textContent = b;
     document.getElementById('cpPreview').style.background = 'rgb(' + r + ',' + g + ',' + b + ')';
+    if (window._cpThrottle) clearTimeout(window._cpThrottle);
+    window._cpThrottle = setTimeout(function(){ applyColor(rgbToHex(r, g, b), false); }, 30);
   }
 
   window.applyCustomFromSliders = function(){
