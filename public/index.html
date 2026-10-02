@@ -151,9 +151,9 @@ input[type=file]{display:none}
 .fullscreen-fire .ff-btn:active{transform:translateY(5px);box-shadow:0 2px 0 #7a0d2a}
 .fullscreen-fire .ff-skip{padding:12px;background:transparent;border:none;color:var(--dim);font-family:inherit;font-size:13px;font-weight:700;cursor:pointer}
 .fullscreen-fire .ff-skip:hover,.fullscreen-fire .ff-skip:active{color:#fff}
-</style>
-</head>
-<body>
+.theme-btn{width:38px;height:38px;border-radius:10px;border:1px solid var(--border);background:var(--card);color:var(--text);font-size:18px;cursor:pointer;display:flex;align-items:center;justify-content:center;margin-right:8px;transition:transform .15s ease;font-family:inherit}.theme-btn:active{transform:scale(.9)}</style>
+<link rel="stylesheet" href="/themes.css"></head>
+<body class="theme-wine">
 <div class="toast" id="toast"><span class="ti" id="toastIc">💖</span><span id="toastText"></span></div>
 
 <!-- ЭКРАН: замок -->
@@ -164,7 +164,7 @@ input[type=file]{display:none}
 <div class="app">
 <div class="header">
 <div class="brand"><div class="logo">T</div><div><div class="bname">ТЕПЛО</div><div class="bsub">direct</div></div></div>
-<div class="me"><span id="meE">🦊</span> <span id="meN">—</span></div>
+<button class="theme-btn" onclick="openThemePicker()" title="Сменить тему">🎨</button><div class="me"><span id="meE">🦊</span> <span id="meN">—</span></div>
 </div>
 
 <div class="section"><div class="slabel">Твоя серия</div>
@@ -236,7 +236,7 @@ input[type=file]{display:none}
 
 <a class="watermark" href="https://t.me/aSp1rit" target="_blank" rel="noopener">by @aSp1rit</a>
 
-<script>
+<!-- МОДАЛ ТЕМЫ --><div class="modal-bg" id="themeModal"><div class="modal"><div class="modal-title">🎨 Выбери тему</div><div class="theme-grid" id="themeGrid"></div><div class="modal-btns"><button class="btn-cancel" onclick="closeThemePicker()">Закрыть</button></div></div></div><style>.theme-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:12px}.theme-item{padding:16px 12px;border-radius:14px;border:2px solid var(--border);background:var(--card);cursor:pointer;font-family:inherit;font-size:13px;font-weight:700;color:var(--text);text-align:center;transition:all .2s ease}.theme-item .t-preview{width:100%;height:8px;border-radius:4px;margin-bottom:10px;background:linear-gradient(90deg,var(--t-pink),var(--t-mag))}.theme-item .t-name{font-size:13px}.theme-item.active{border-color:var(--pink);box-shadow:0 0 20px rgba(255,33,100,.3)}.theme-item:active{transform:scale(.95)}</style><script>
 const LS_T='teplo_token_v1',LS_H='teplo_history_v1',LS_S='teplo_stats_v1';
 const $=id=>document.getElementById(id);
 let myToken=null,me=null,allUsers=[],recipient=null;
@@ -478,6 +478,6 @@ $('punishInput').addEventListener('keydown',e=>{if(e.key==='Enter'){e.preventDef
 
 init();
 </script>
-<script src="/pwa-init.js"></script>
+<script src="/theme.js"></script><script src="/pwa-init.js"></script>
 </body>
 </html>
