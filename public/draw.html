@@ -454,3 +454,26 @@ html, body {
 }
 .tb { position: relative !important; }
 </style>
+<style>
+/* === Прижимаем панель к низу и убираем лишний скролл === */
+body {
+  display: flex !important;
+  flex-direction: column !important;
+  min-height: 100vh !important;
+  min-height: 100dvh !important;
+  overflow: hidden !important;
+}
+.top { flex-shrink: 0 !important; }
+.cw {
+  flex: 1 1 0 !important;
+  min-height: 0 !important;
+  max-height: none !important;
+}
+#canvas {
+  max-height: 100% !important;
+}
+.tb {
+  flex-shrink: 0 !important;
+  margin-top: auto !important;
+}
+</style>
