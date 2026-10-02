@@ -34,9 +34,11 @@
 
   /* ==== Основная функция ==== */
   window.applyHue = function(h, opts){
+    document.body.classList.remove('theme-wine','theme-soft','theme-night','theme-day','theme-nature','theme-cyber');
+
     opts = opts || {};
     currentHue = h;
-    const root = document.documentElement;
+    const root = document.body;
 
     const pink = hslToHex(h, 78, 55);
     const pinkD = hslToHex(h, 78, 38);
