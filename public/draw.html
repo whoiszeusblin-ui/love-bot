@@ -477,3 +477,20 @@ body {
   margin-top: auto !important;
 }
 </style>
+<style>
+@media (display-mode: standalone) {
+  html, body {
+    height: 100vh !important;
+    height: 100dvh !important;
+    overflow: hidden !important;
+    display: flex !important;
+    flex-direction: column !important;
+    padding-top: env(safe-area-inset-top, 0px) !important;
+    padding-bottom: env(safe-area-inset-bottom, 0px) !important;
+  }
+  .top { flex-shrink: 0 !important; }
+  .cw { flex: 1 1 0 !important; min-height: 0 !important; overflow: hidden !important; }
+  #canvas { max-width: 100% !important; max-height: 100% !important; width: auto !important; height: auto !important; }
+  .tb { flex-shrink: 0 !important; }
+}
+</style>
