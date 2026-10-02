@@ -633,3 +633,4 @@ body.theme-day .quiz-card, body.theme-day .quiz-result-item, body.theme-day .his
 .fire-card::before, .fire-card::after{
   display: none !important;
 }
+.header-compact{position:fixed !important;top:18px !important;right:18px !important;margin:0 !important;z-index:100 !important;}
