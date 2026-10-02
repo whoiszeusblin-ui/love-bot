@@ -298,3 +298,67 @@ body.theme-day .quiz-card, body.theme-day .quiz-result-item, body.theme-day .his
                     color-mix(in srgb, var(--pink) 16%, rgba(18,18,22,.9))) padding-box,
     linear-gradient(135deg, var(--pink), var(--mag), var(--pur), var(--blue), var(--pink)) border-box !important;
 }
+
+/* ===== СТЕКЛЯННЫЙ БЛИК НА КНОПКАХ ===== */
+.act, .rec, .btn-item, .settings-item, .fire-card, .hue-wrap, .stats{
+  position:relative;
+  overflow:hidden;
+}
+
+/* Верхний блик — светлое пятно сверху-справа */
+.act::before, .rec::before, .btn-item::before, .settings-item::before,
+.fire-card::before, .hue-wrap::before, .stats::before{
+  content:'';
+  position:absolute;
+  top:-60%;
+  right:-40%;
+  width:180px;
+  height:180px;
+  border-radius:50%;
+  background:radial-gradient(circle,
+    rgba(255,255,255,0.18) 0%,
+    rgba(255,255,255,0.06) 40%,
+    transparent 70%);
+  pointer-events:none;
+  z-index:1;
+  filter:blur(4px);
+}
+
+/* На светлых темах — тёмный блик */
+body.theme-soft .act::before, body.theme-soft .rec::before,
+body.theme-soft .settings-item::before, body.theme-soft .btn-item::before,
+body.theme-day .act::before, body.theme-day .rec::before,
+body.theme-day .settings-item::before, body.theme-day .btn-item::before{
+  background:radial-gradient(circle,
+    rgba(0,0,0,0.06) 0%,
+    rgba(0,0,0,0.02) 40%,
+    transparent 70%);
+}
+
+/* Тонкая верхняя подсветка — как у стекла */
+.act::after, .rec::after{
+  content:'';
+  position:absolute;
+  top:0;left:0;right:0;
+  height:1px;
+  background:linear-gradient(90deg,
+    transparent 0%,
+    rgba(255,255,255,0.25) 50%,
+    transparent 100%);
+  pointer-events:none;
+  z-index:2;
+}
+body.theme-soft .act::after, body.theme-soft .rec::after,
+body.theme-day .act::after, body.theme-day .rec::after{
+  background:linear-gradient(90deg,
+    transparent 0%,
+    rgba(255,255,255,0.8) 50%,
+    transparent 100%);
+}
+
+/* Контент выше бликов */
+.act .ic, .act .lbl, .act .hint,
+.rec .em, .rec .name, .rec .st{
+  position:relative;
+  z-index:3;
+}
