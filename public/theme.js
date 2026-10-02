@@ -34,7 +34,7 @@
 
   /* ==== Основная функция ==== */
   window.applyHue = function(h, opts){
-    document.body.classList.remove('theme-wine','theme-soft','theme-night','theme-day','theme-nature','theme-cyber');
+    /* theme class не сбрасываем — inline стили перебивают */
 
     opts = opts || {};
     currentHue = h;
