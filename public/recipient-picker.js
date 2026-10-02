@@ -152,3 +152,39 @@
     setTimeout(init, 600);
   }
 })();
+
+/* ===== Скрываем старый заголовок "Кому отправить" и старый блок ===== */
+(function(){
+  function hideOld(){
+    // Находим все .slabel с текстом "кому отправить"
+    document.querySelectorAll('.slabel').forEach(function(el){
+      var t = (el.textContent || '').trim().toLowerCase();
+      if (t === 'кому отправить' || t === 'кому отправить' || t.indexOf('кому отправ') === 0) {
+        el.style.display = 'none';
+        // Скрываем и родительскую секцию, если она пустая
+        var parent = el.parentElement;
+        if (parent) {
+          var rec = parent.querySelector('.recipients');
+          if (rec && rec.style.display === 'none') {
+            // Оставляем только если там есть ещё что-то
+          }
+        }
+      }
+    });
+    // Скрываем сам блок .recipients
+    document.querySelectorAll('.recipients').forEach(function(el){
+      el.style.display = 'none';
+    });
+  }
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', function(){
+      setTimeout(hideOld, 300);
+      setTimeout(hideOld, 1000);
+      setTimeout(hideOld, 2500);
+    });
+  } else {
+    setTimeout(hideOld, 300);
+    setTimeout(hideOld, 1000);
+    setTimeout(hideOld, 2500);
+  }
+})();
