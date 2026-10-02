@@ -6,10 +6,8 @@
     const header = document.querySelector('.header');
     if (!header || header.classList.contains('rebuilt')) return;
 
-    // Берём оригинальный .me ЦЕЛИКОМ (со всеми id) — так profile.js сможет обновлять имя
     const meEl = header.querySelector('.me');
 
-    // Центрированный логотип
     const logoWrap = document.createElement('div');
     logoWrap.className = 'header-center-logo';
     logoWrap.innerHTML =
@@ -21,14 +19,60 @@
     parent.insertBefore(logoWrap, header);
 
     if (meEl) {
-      // Переносим .me (тот же самый DOM-элемент) в компактный блок
       const compact = document.createElement('div');
       compact.className = 'header-compact';
-      compact.appendChild(meEl); // переносим оригинал, не клон
+      compact.appendChild(meEl);
       parent.insertBefore(compact, header.nextSibling);
     }
 
     header.classList.add('rebuilt');
+  }
+
+  /* ===== Перестройка быстрых действий ===== */
+  function rebuildActions(){
+    const grid = document.querySelector('.actions');
+    if (!grid || grid.classList.contains('rebuilt')) return;
+
+    // Убираем все старые НЕ-кастомные кнопки, кастомные оставляем
+    Array.prototype.slice.call(grid.querySelectorAll('.act:not(.custom)')).forEach(function(el){
+      el.remove();
+    });
+
+    grid.classList.add('rebuilt');
+
+    function mk(cls, icon, lbl, hint, handler){
+      const b = document.createElement('button');
+      b.className = 'act ' + cls;
+      b.innerHTML = '<span class="ic">' + icon + '</span>' +
+                    '<span class="lbl">' + lbl + '</span>' +
+                    (hint ? '<span class="hint">' + hint + '</span>' : '');
+      b.onclick = handler;
+      return b;
+    }
+
+    // Большая сверху
+    grid.appendChild(mk('pink big', '💖', 'Подумал о тебе', 'thinking',
+      function(){ window.send('💖 Я подумал(а) о тебе прямо сейчас!'); }));
+
+    // Ряд 1
+    grid.appendChild(mk('mag small', '😘', 'Скучаю', '',
+      function(){ window.send('😘 Скучаю по тебе...'); }));
+    grid.appendChild(mk('pur small', '☕', 'Утро', '',
+      function(){ window.send('☕ Доброе утро! Пусть день будет тёплым 🌤'); }));
+    grid.appendChild(mk('blue small', '🌙', 'Ночь', '',
+      function(){ window.send('🌙 Спокойной ночи, сладких снов ✨'); }));
+
+    // Ряд 2
+    grid.appendChild(mk('dark small', '🤗', 'Обнимаю', '',
+      function(){ window.send('🤗 Обнимаю тебя крепко-крепко!'); }));
+    grid.appendChild(mk('dark small', '⚡', 'Срочно', '',
+      function(){ window.send('⚡ Позвони мне срочно, если можешь 💕'); }));
+    grid.appendChild(mk('pink small', '🎨', 'Рисунок', '',
+      function(){ if (window.goDraw) window.goDraw(); }));
+
+    // Большая снизу
+    grid.appendChild(mk('dark big', '📸', 'Отправить фото', 'из галереи',
+      function(){ const f = document.getElementById('f'); if (f) f.click(); }));
   }
 
   /* ===== Календарь недели ===== */
@@ -57,10 +101,9 @@
       const daysAgo = todayIdx - i;
       const d = new Date(today);
       d.setDate(d.getDate() - daysAgo);
-      const ds = toDateStr(d);
       result.push({
         label: labels[i],
-        filled: marked.has(ds),
+        filled: marked.has(toDateStr(d)),
         today: i === todayIdx,
         future: i > todayIdx
       });
@@ -145,6 +188,7 @@
 
   function apply(){
     enhanceBrand();
+    rebuildActions();
     enhanceFireCard();
     setTimeout(fetchStreaksAndRender, 900);
     setTimeout(fetchStreaksAndRender, 2500);
