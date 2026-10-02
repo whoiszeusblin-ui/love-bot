@@ -23,13 +23,15 @@ body.theme-day .ripple-fx{background:rgba(0,0,0,.15)}
 
 /* ===== GLASSMORPHISM ===== */
 .glass{
-  background:color-mix(in srgb, var(--card) 55%, transparent) !important;
-  backdrop-filter:blur(18px) saturate(160%);
-  -webkit-backdrop-filter:blur(18px) saturate(160%);
+  background:color-mix(in srgb, var(--card) 88%, transparent) !important;
+  backdrop-filter:blur(24px) saturate(140%);
+  -webkit-backdrop-filter:blur(24px) saturate(140%);
+  box-shadow:0 4px 20px rgba(0,0,0,.12);
 }
 body.theme-soft .glass,
 body.theme-day .glass{
-  background:color-mix(in srgb, var(--card) 75%, transparent) !important;
+  background:color-mix(in srgb, var(--card) 92%, transparent) !important;
+  box-shadow:0 4px 20px rgba(0,0,0,.06);
 }
 
 /* ===== GRADIENT BORDERS ===== */
