@@ -603,3 +603,33 @@ body.theme-day .quiz-card, body.theme-day .quiz-result-item, body.theme-day .his
   overflow: hidden !important;
   isolation: isolate;
 }
+
+/* ===== УБИРАЕМ ДВОЙНУЮ РАМКУ ===== */
+
+/* Убираем внешнюю сплошную рамку через box-shadow */
+.rec.active{
+  box-shadow: 0 8px 28px var(--fire-glow) !important;
+  border: 1.5px solid transparent !important;
+}
+
+/* Общая проверка — на всех карточках отключаем внешние ринги */
+.act, .rec, .hitem, .settings-item, .stats, .hue-wrap,
+.btn-item, .faq-item, .fire-card, .quiz-card, .quiz-result-item, .history-item{
+  outline: none !important;
+  box-shadow: 0 4px 16px rgba(0,0,0,.18) !important;
+}
+
+/* Внутренняя рамка (gradient) должна лежать ровно по краю */
+.act, .rec, .hitem, .settings-item, .stats, .hue-wrap,
+.btn-item, .faq-item, .fire-card, .quiz-card, .quiz-result-item, .history-item{
+  background-clip: padding-box, border-box !important;
+  border-width: 1.5px !important;
+}
+
+/* Убираем лишние inset-обводки (внутренние свечения по краям) */
+.rec::before, .rec::after,
+.act::before, .act::after,
+.hitem::before, .hitem::after,
+.fire-card::before, .fire-card::after{
+  display: none !important;
+}
