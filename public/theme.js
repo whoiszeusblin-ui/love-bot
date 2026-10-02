@@ -101,4 +101,17 @@
       window.applyHue(parseFloat(e.target.value));
     }
   });
+
+  /* Отключаем transition на время перетаскивания ползунка */
+  document.addEventListener('pointerdown', function(e){
+    if (e.target && e.target.id === 'hueSlider') {
+      document.body.classList.add('hue-dragging');
+    }
+  });
+  document.addEventListener('pointerup', function(){
+    document.body.classList.remove('hue-dragging');
+  });
+  document.addEventListener('pointercancel', function(){
+    document.body.classList.remove('hue-dragging');
+  });
 })();
