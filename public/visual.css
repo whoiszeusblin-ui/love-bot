@@ -362,3 +362,25 @@ body.theme-day .act::after, body.theme-day .rec::after{
   position:relative;
   z-index:3;
 }
+
+/* ===== УБИРАЕМ БЛИКИ ===== */
+.act::before, .rec::before, .btn-item::before, .settings-item::before,
+.fire-card::before, .hue-wrap::before, .stats::before{
+  display:none !important;
+  background:none !important;
+  content:none !important;
+}
+
+/* Оставляем только тонкую верхнюю подсветку — она красивая */
+.act::after, .rec::after{
+  content:'';
+  position:absolute;
+  top:0;left:0;right:0;
+  height:1px;
+  background:linear-gradient(90deg,
+    transparent 0%,
+    rgba(255,255,255,0.18) 50%,
+    transparent 100%);
+  pointer-events:none;
+  z-index:2;
+}
