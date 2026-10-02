@@ -1,0 +1,84 @@
+/* ===== ЖИВОЙ ФОН ===== */
+.bg-anim {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  overflow: hidden;
+}
+
+/* Градиентные пятна — медленно дышат */
+.bg-anim .blob {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(80px);
+  opacity: 0.35;
+  will-change: transform, opacity;
+  transition: background-color 1.2s cubic-bezier(.4,0,.2,1);
+}
+.bg-anim .blob-1 {
+  width: 380px; height: 380px;
+  top: -100px; left: -120px;
+  background: var(--pink, #ff2164);
+  animation: blobFloat1 22s ease-in-out infinite;
+}
+.bg-anim .blob-2 {
+  width: 320px; height: 320px;
+  bottom: -80px; right: -100px;
+  background: var(--mag, #fb3dff);
+  animation: blobFloat2 26s ease-in-out infinite;
+  opacity: 0.28;
+}
+.bg-anim .blob-3 {
+  width: 260px; height: 260px;
+  top: 45%; left: 60%;
+  background: var(--pur, #9b23ea);
+  animation: blobFloat3 30s ease-in-out infinite;
+  opacity: 0.22;
+}
+
+@keyframes blobFloat1 {
+  0%,100% { transform: translate(0,0) scale(1); }
+  33%     { transform: translate(60px, 80px) scale(1.1); }
+  66%     { transform: translate(30px, -40px) scale(0.95); }
+}
+@keyframes blobFloat2 {
+  0%,100% { transform: translate(0,0) scale(1); }
+  40%     { transform: translate(-70px, -60px) scale(1.15); }
+  70%     { transform: translate(-30px, 50px) scale(0.9); }
+}
+@keyframes blobFloat3 {
+  0%,100% { transform: translate(0,0) scale(1); }
+  50%     { transform: translate(-50px, -70px) scale(1.2); }
+}
+
+/* Мягкие точки-«снежинки», медленно плывут вверх */
+.bg-anim .particle {
+  position: absolute;
+  bottom: -10px;
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: var(--text, #fff);
+  opacity: 0;
+  animation: particleRise linear infinite;
+  will-change: transform, opacity;
+}
+@keyframes particleRise {
+  0%   { transform: translateY(0) scale(0.6); opacity: 0; }
+  10%  { opacity: 0.6; }
+  90%  { opacity: 0.35; }
+  100% { transform: translateY(-110vh) scale(1); opacity: 0; }
+}
+
+/* Светлые темы — меньше контраста */
+body.theme-soft .bg-anim .particle,
+body.theme-day .bg-anim .particle { background: var(--pink); opacity: 0.15; }
+body.theme-soft .bg-anim .blob,
+body.theme-day .bg-anim .blob { opacity: 0.22; filter: blur(90px); }
+
+/* Уважаем настройки системы — если пользователь просил меньше движения */
+@media (prefers-reduced-motion: reduce) {
+  .bg-anim .blob,
+  .bg-anim .particle { animation: none !important; }
+}
