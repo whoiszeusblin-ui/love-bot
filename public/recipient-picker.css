@@ -252,3 +252,4 @@ body.theme-soft .rp-btn, body.theme-day .rp-btn{
   justify-content: space-between !important;
 }
 .rp-bar{justify-content:flex-start !important;gap:10px !important;}
+.rp-bar{flex-direction:column !important;align-items:flex-start !important;gap:8px !important;}
