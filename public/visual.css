@@ -1,0 +1,73 @@
+/* ===== RIPPLE ===== */
+.ripple-clip{
+  position:absolute;inset:0;
+  overflow:hidden;
+  pointer-events:none;
+  border-radius:inherit;
+  z-index:2;
+}
+.ripple-fx{
+  position:absolute;
+  border-radius:50%;
+  background:rgba(255,255,255,.4);
+  transform:scale(0);
+  animation:rippleFade .65s cubic-bezier(.16,1,.3,1) forwards;
+  pointer-events:none;
+}
+body.theme-soft .ripple-fx,
+body.theme-day .ripple-fx{background:rgba(0,0,0,.15)}
+@keyframes rippleFade{
+  0%{transform:scale(0);opacity:1}
+  100%{transform:scale(1);opacity:0}
+}
+
+/* ===== GLASSMORPHISM ===== */
+.glass{
+  background:color-mix(in srgb, var(--card) 55%, transparent) !important;
+  backdrop-filter:blur(18px) saturate(160%);
+  -webkit-backdrop-filter:blur(18px) saturate(160%);
+}
+body.theme-soft .glass,
+body.theme-day .glass{
+  background:color-mix(in srgb, var(--card) 75%, transparent) !important;
+}
+
+/* ===== GRADIENT BORDERS ===== */
+.grad-border{
+  position:relative;
+  border-color:transparent !important;
+}
+.grad-border::after{
+  content:'';
+  position:absolute;
+  inset:0;
+  border-radius:inherit;
+  padding:1.5px;
+  background:linear-gradient(135deg,var(--pink),var(--mag),var(--pur),var(--blue),var(--pink));
+  background-size:300% 300%;
+  -webkit-mask:linear-gradient(#fff 0 0) content-box,linear-gradient(#fff 0 0);
+  mask:linear-gradient(#fff 0 0) content-box,linear-gradient(#fff 0 0);
+  -webkit-mask-composite:xor;
+  mask-composite:exclude;
+  pointer-events:none;
+  animation:gradShift 8s ease infinite;
+  z-index:1;
+}
+@keyframes gradShift{
+  0%,100%{background-position:0% 50%}
+  50%{background-position:100% 50%}
+}
+
+/* ===== PAGE TRANSITION ===== */
+body{
+  animation:pageEnter .35s cubic-bezier(.16,1,.3,1) both;
+}
+@keyframes pageEnter{
+  from{opacity:0}
+  to{opacity:1}
+}
+body.page-leaving{
+  opacity:0;
+  transition:opacity .24s ease !important;
+  pointer-events:none;
+}
