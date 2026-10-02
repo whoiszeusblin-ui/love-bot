@@ -1,0 +1,8 @@
+.tabbar{position:fixed;bottom:0;left:0;right:0;display:flex;background:var(--card);border-top:1px solid var(--border);z-index:200;padding-bottom:env(safe-area-inset-bottom,0);box-shadow:0 -8px 30px rgba(0,0,0,.25)}
+.tabbar a{flex:1;padding:12px 8px 10px;text-align:center;color:var(--dim);text-decoration:none;font-size:11px;font-weight:700;transition:color .25s ease;font-family:inherit;letter-spacing:.02em}
+.tabbar a .tb-icon{display:block;font-size:22px;margin-bottom:3px;transition:transform .3s cubic-bezier(.34,1.56,.64,1)}
+.tabbar a.active{color:var(--pink)}
+.tabbar a.active .tb-icon{transform:translateY(-3px) scale(1.15)}
+.tabbar a:active .tb-icon{transform:scale(.9)}
+body{padding-bottom:76px !important}
+body.hide-header-btns .theme-btn{display:none !important}
