@@ -27,3 +27,19 @@
 .color-pick.pur{background:linear-gradient(145deg,#9b23ea,#6b16a3)}
 .color-pick.blue{background:linear-gradient(145deg,#5f72bd,#3e4d8a)}
 .color-pick.dark{background:linear-gradient(145deg,#2a2a2e,#0a0a0d);border:1px solid var(--border2)}
+
+/* ===== ОБЩИЕ СТИЛИ МОДАЛОК (работают на всех страницах) ===== */
+.modal-bg{position:fixed;inset:0;background:rgba(1,0,3,.88);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);z-index:500;display:none;align-items:center;justify-content:center;padding:20px;overflow-y:auto}
+.modal-bg.show{display:flex}
+.modal{background:linear-gradient(145deg,var(--card),var(--bg));border:1.5px solid var(--border2);border-radius:22px;padding:24px;max-width:460px;width:100%;box-shadow:0 30px 80px rgba(0,0,0,.8);max-height:90vh;overflow-y:auto;animation:modalPop .4s cubic-bezier(.16,1,.3,1)}
+@keyframes modalPop{from{opacity:0;transform:scale(.92)}to{opacity:1;transform:scale(1)}}
+.modal-btns{display:flex;gap:10px;margin-top:20px}
+.modal-btns button{flex:1;padding:14px;font-family:inherit;font-size:14px;font-weight:900;border:none;border-radius:12px;cursor:pointer;transition:transform .15s ease}
+.modal-btns button:active{transform:scale(.96)}
+.btn-cancel{background:var(--bg);color:var(--dim);border:1.5px solid var(--border2)}
+.btn-ok{background:linear-gradient(145deg,var(--pink),var(--pink-d,#c4184d));color:#fff;box-shadow:0 5px 0 rgba(0,0,0,.35),0 8px 20px var(--fire-glow,rgba(255,33,100,.35))}
+.btn-ok:active{box-shadow:0 2px 0 rgba(0,0,0,.35)}
+
+/* Тёмный оверлей НЕ должен светлеть на светлых темах */
+body.theme-soft .modal,
+body.theme-day .modal{color:var(--text)}

@@ -6,3 +6,8 @@
 .tabbar a:active .tb-icon{transform:scale(.9)}
 body{padding-bottom:76px !important}
 body.hide-header-btns .theme-btn{display:none !important}
+
+/* Скрываем 🎨📜⚙️ из шапки — они переехали в Настройки */
+body.hide-header-btns .theme-btn,
+body.hide-header-btns #settingsBtn,
+body.hide-header-btns #logBtn{display:none !important}
