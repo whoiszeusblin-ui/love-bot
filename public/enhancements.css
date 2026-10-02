@@ -1,0 +1,108 @@
+/* ===== Аватарка за логотипом ===== */
+.brand.brand-wrap{
+  position:relative;
+  display:inline-flex;
+  align-items:center;
+  padding:10px 16px;
+  border-radius:16px;
+  overflow:hidden;
+}
+.brand-bg-emoji{
+  position:absolute;top:50%;left:50%;
+  transform:translate(-50%,-50%);
+  font-size:96px;
+  opacity:.07;
+  pointer-events:none;
+  z-index:0;
+  filter:blur(1px);
+  user-select:none;
+  line-height:1;
+}
+.brand.brand-wrap > .logo,
+.brand.brand-wrap > div:not(.brand-bg-emoji){
+  position:relative;
+  z-index:1;
+}
+
+/* ===== Календарь недели ===== */
+.week-calendar{
+  display:grid;
+  grid-template-columns:repeat(7,1fr);
+  gap:6px;
+  margin-top:18px;
+  padding:0 4px;
+}
+.wc-day{text-align:center}
+.wc-label{
+  font-size:9px;
+  font-family:'Roboto Mono',monospace;
+  color:var(--dim);
+  letter-spacing:.08em;
+  text-transform:uppercase;
+  margin-bottom:6px;
+  font-weight:700;
+}
+.wc-dot{
+  width:100%;
+  aspect-ratio:1;
+  max-width:28px;
+  margin:0 auto;
+  border-radius:50%;
+  background:rgba(255,255,255,.04);
+  border:1.5px solid rgba(255,255,255,.1);
+  display:flex;align-items:center;justify-content:center;
+  transition:all .3s ease;
+  position:relative;
+}
+body.theme-soft .wc-dot,
+body.theme-day .wc-dot{
+  background:rgba(0,0,0,.04);
+  border-color:rgba(0,0,0,.1);
+}
+.wc-dot.filled{
+  background:linear-gradient(145deg,var(--pink),var(--mag));
+  border-color:transparent;
+  box-shadow:0 4px 14px var(--fire-glow,rgba(255,33,100,.4));
+}
+.wc-dot.filled::after{
+  content:'';
+  position:absolute;inset:0;
+  border-radius:50%;
+  background:radial-gradient(circle at 30% 30%,rgba(255,255,255,.45),transparent 60%);
+}
+.wc-dot.today{
+  border-color:var(--pink);
+  border-width:2px;
+  box-shadow:0 0 0 3px rgba(255,33,100,.15);
+}
+.wc-dot.today.filled{
+  box-shadow:0 0 0 3px rgba(255,33,100,.25),0 4px 14px var(--fire-glow,rgba(255,33,100,.5));
+}
+.wc-dot.future{opacity:.35}
+
+/* ===== Прогресс-бар ===== */
+.wc-progress{
+  margin-top:16px;
+  height:6px;
+  border-radius:4px;
+  background:rgba(255,255,255,.06);
+  overflow:hidden;
+}
+body.theme-soft .wc-progress,
+body.theme-day .wc-progress{background:rgba(0,0,0,.06)}
+.wc-progress-bar{
+  height:100%;
+  background:linear-gradient(90deg,var(--pink),var(--mag));
+  border-radius:4px;
+  box-shadow:0 0 12px var(--fire-glow,rgba(255,33,100,.5));
+  transition:width .8s cubic-bezier(.16,1,.3,1);
+  width:0%;
+}
+.wc-progress-text{
+  margin-top:8px;
+  font-size:11px;
+  color:var(--dim);
+  font-family:'Roboto Mono',monospace;
+  text-align:center;
+  letter-spacing:.05em;
+}
