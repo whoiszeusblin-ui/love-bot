@@ -399,3 +399,86 @@ body.theme-day .bg-anim .blob{
 .bg-anim .particle{
   display:block !important;
 }
+
+/* ===== ОПТИМИЗАЦИЯ ПРОИЗВОДИТЕЛЬНОСТИ ===== */
+
+/* 1. Убираем backdrop-filter — самый тяжёлый эффект */
+.act, .rec, .hitem, .settings-item, .stats, .hue-wrap,
+.btn-item, .faq-item, .fire-card, .quiz-card, .quiz-result-item, .history-item{
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+  /* Имитация "стекла" через двойной градиент — визуально похоже, но БЕЗ GPU-нагрузки */
+  background:
+    linear-gradient(
+      135deg,
+      rgba(255,255,255,.04) 0%,
+      rgba(255,255,255,.01) 40%,
+      rgba(0,0,0,.12) 100%
+    ) padding-box,
+    linear-gradient(rgba(18,18,22,.92), rgba(18,18,22,.92)) padding-box,
+    linear-gradient(135deg, var(--pink), var(--mag), var(--pur), var(--blue), var(--pink)) border-box !important;
+}
+
+body.theme-soft .act, body.theme-soft .rec, body.theme-soft .hitem,
+body.theme-soft .settings-item, body.theme-soft .stats, body.theme-soft .hue-wrap,
+body.theme-soft .btn-item, body.theme-soft .faq-item, body.theme-soft .fire-card,
+body.theme-soft .quiz-card, body.theme-soft .quiz-result-item, body.theme-soft .history-item,
+body.theme-day .act, body.theme-day .rec, body.theme-day .hitem,
+body.theme-day .settings-item, body.theme-day .stats, body.theme-day .hue-wrap,
+body.theme-day .btn-item, body.theme-day .faq-item, body.theme-day .fire-card,
+body.theme-day .quiz-card, body.theme-day .quiz-result-item, body.theme-day .history-item{
+  background:
+    linear-gradient(
+      135deg,
+      rgba(255,255,255,.65) 0%,
+      rgba(255,255,255,.35) 40%,
+      rgba(0,0,0,.02) 100%
+    ) padding-box,
+    linear-gradient(rgba(255,255,255,.94), rgba(255,255,255,.94)) padding-box,
+    linear-gradient(135deg, var(--pink), var(--mag), var(--pur), var(--blue), var(--pink)) border-box !important;
+}
+
+/* 2. Blob'ы — убираем тяжёлый filter: blur, заменяем на pre-blur градиент */
+.bg-anim .blob{
+  filter: none !important;
+  background: radial-gradient(circle,
+    var(--pink) 0%,
+    color-mix(in srgb, var(--pink) 40%, transparent) 30%,
+    transparent 65%) !important;
+}
+.bg-anim .blob-1{ background: radial-gradient(circle,
+  var(--pink) 0%,
+  color-mix(in srgb, var(--pink) 40%, transparent) 30%,
+  transparent 65%) !important; }
+.bg-anim .blob-2{ background: radial-gradient(circle,
+  var(--mag) 0%,
+  color-mix(in srgb, var(--mag) 40%, transparent) 30%,
+  transparent 65%) !important; }
+.bg-anim .blob-3{ background: radial-gradient(circle,
+  var(--pur) 0%,
+  color-mix(in srgb, var(--pur) 40%, transparent) 30%,
+  transparent 65%) !important; }
+
+/* 3. Кнопки и карточки — GPU-слой, чтобы не пересчитывались */
+.act, .rec, .hitem, .settings-item, .fire-card, .stats{
+  transform: translateZ(0);
+  will-change: transform;
+}
+
+/* 4. Длинные списки — откладываем отрисовку вне экрана */
+.section, .history-list, .buttons-list{
+  content-visibility: auto;
+  contain-intrinsic-size: 200px;
+}
+
+/* 5. Отключаем transitions на фоне страницы — они тоже тормозят */
+html, body{
+  transition: none !important;
+}
+
+/* 6. Hue-slider — при движении отключаем анимации на всей странице */
+body.hue-dragging .bg-anim,
+body.hue-dragging .fire-spark,
+body.hue-dragging .fire-ember{
+  display: none !important;
+}
