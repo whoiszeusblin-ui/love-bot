@@ -273,6 +273,7 @@ app.post('/api/send-photo', upload.single('photo'), async (req, res) => {
 });
 
 /* ============ STATIC ============ */
+require("./profile-routes")(app, { binGet, binPut, findByToken, loadUsers, tgSend });
 app.use(express.static('public'));
 
 /* ============ START ============ */
