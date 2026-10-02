@@ -251,3 +251,4 @@ body.theme-soft .rp-btn, body.theme-day .rp-btn{
   align-items: center !important;
   justify-content: space-between !important;
 }
+.rp-bar{justify-content:flex-start !important;gap:10px !important;}
