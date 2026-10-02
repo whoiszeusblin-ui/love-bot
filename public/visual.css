@@ -265,3 +265,36 @@ body.theme-soft .fire-card.off, body.theme-day .fire-card.off{
   position:relative;
   z-index:2;
 }
+
+/* ===== УБИРАЕМ BLOB'Ы ПОЛНОСТЬЮ — ИСТОЧНИК ПЯТЕН ===== */
+.bg-anim .blob{display:none !important}
+
+/* Усиливаем плотность стекла — 92% */
+.act, .rec, .hitem, .settings-item, .stats, .hue-wrap,
+.btn-item, .faq-item, .fire-card.off, .quiz-card, .quiz-result-item, .history-item{
+  background:
+    linear-gradient(rgba(18,18,22,.92), rgba(18,18,22,.92)) padding-box,
+    linear-gradient(135deg, var(--pink), var(--mag), var(--pur), var(--blue), var(--pink)) border-box !important;
+  backdrop-filter: blur(35px) saturate(130%) !important;
+  -webkit-backdrop-filter: blur(35px) saturate(130%) !important;
+}
+
+body.theme-soft .act, body.theme-soft .rec, body.theme-soft .hitem,
+body.theme-soft .settings-item, body.theme-soft .stats, body.theme-soft .hue-wrap,
+body.theme-soft .btn-item, body.theme-soft .faq-item, body.theme-soft .fire-card.off,
+body.theme-soft .quiz-card, body.theme-soft .quiz-result-item, body.theme-soft .history-item,
+body.theme-day .act, body.theme-day .rec, body.theme-day .hitem,
+body.theme-day .settings-item, body.theme-day .stats, body.theme-day .hue-wrap,
+body.theme-day .btn-item, body.theme-day .faq-item, body.theme-day .fire-card.off,
+body.theme-day .quiz-card, body.theme-day .quiz-result-item, body.theme-day .history-item{
+  background:
+    linear-gradient(rgba(255,255,255,.94), rgba(255,255,255,.94)) padding-box,
+    linear-gradient(135deg, var(--pink), var(--mag), var(--pur), var(--blue), var(--pink)) border-box !important;
+}
+
+.rec.active{
+  background:
+    linear-gradient(color-mix(in srgb, var(--pink) 16%, rgba(18,18,22,.9)),
+                    color-mix(in srgb, var(--pink) 16%, rgba(18,18,22,.9))) padding-box,
+    linear-gradient(135deg, var(--pink), var(--mag), var(--pur), var(--blue), var(--pink)) border-box !important;
+}
