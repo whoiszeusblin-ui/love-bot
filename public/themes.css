@@ -1,94 +1,64 @@
-/* Тема Винная (по умолчанию) */
 body.theme-wine{
-  --bg:#010003;
-  --card:#0b0b0e;
-  --border:rgba(255,255,255,.07);
-  --border2:rgba(255,255,255,.14);
-  --text:#fff;
-  --muted:#c7c7c7;
-  --dim:#5f5f68;
-  --pink:#ff2164;
-  --mag:#fb3dff;
-  --pur:#9b23ea;
-  --blue:#5f72bd;
+  --bg:#010003;--card:#0b0b0e;
+  --border:rgba(255,255,255,.07);--border2:rgba(255,255,255,.14);
+  --text:#fff;--muted:#c7c7c7;--dim:#5f5f68;
+  --pink:#ff2164;--pink-d:#c4184d;
+  --mag:#fb3dff;--mag-d:#b71fb5;
+  --pur:#9b23ea;--pur-d:#6b16a3;
+  --blue:#5f72bd;--blue-d:#3e4d8a;
   --fire-glow:rgba(255,80,30,.35);
 }
-/* Тема Нежная */
 body.theme-soft{
-  --bg:#f7ede2;
-  --card:#ffffff;
-  --border:rgba(180,120,90,.15);
-  --border2:rgba(180,120,90,.28);
-  --text:#3a2418;
-  --muted:#7a5540;
-  --dim:#b08975;
-  --pink:#e8768f;
-  --mag:#d97eb8;
-  --pur:#9b6ecc;
-  --blue:#7a93c9;
+  --bg:#f7ede2;--card:#ffffff;
+  --border:rgba(180,120,90,.15);--border2:rgba(180,120,90,.28);
+  --text:#3a2418;--muted:#7a5540;--dim:#b08975;
+  --pink:#e8768f;--pink-d:#c45a72;
+  --mag:#d97eb8;--mag-d:#b55f9a;
+  --pur:#9b6ecc;--pur-d:#7548a8;
+  --blue:#7a93c9;--blue-d:#5a72a8;
   --fire-glow:rgba(232,118,143,.3);
 }
-/* Тема Ночная */
 body.theme-night{
-  --bg:#0a0612;
-  --card:#14102a;
-  --border:rgba(155,35,234,.15);
-  --border2:rgba(155,35,234,.3);
-  --text:#f0eaff;
-  --muted:#b8a8d9;
-  --dim:#6a5a8a;
-  --pink:#9b23ea;
-  --mag:#c46bff;
-  --pur:#6b2fbf;
-  --blue:#4a3a9b;
+  --bg:#0a0612;--card:#14102a;
+  --border:rgba(155,35,234,.15);--border2:rgba(155,35,234,.3);
+  --text:#f0eaff;--muted:#b8a8d9;--dim:#6a5a8a;
+  --pink:#9b23ea;--pink-d:#6b16a3;
+  --mag:#c46bff;--mag-d:#8f3dc4;
+  --pur:#6b2fbf;--pur-d:#4a1f85;
+  --blue:#4a3a9b;--blue-d:#2f2570;
   --fire-glow:rgba(155,35,234,.4);
 }
-/* Тема Дневная */
 body.theme-day{
-  --bg:#fbf8f3;
-  --card:#ffffff;
-  --border:rgba(0,0,0,.08);
-  --border2:rgba(0,0,0,.14);
-  --text:#1a1a1a;
-  --muted:#5a5a5a;
-  --dim:#9a9a9a;
-  --pink:#ff6b8a;
-  --mag:#ff3dab;
-  --pur:#8b3dff;
-  --blue:#4a7fe8;
+  --bg:#fbf8f3;--card:#ffffff;
+  --border:rgba(0,0,0,.08);--border2:rgba(0,0,0,.14);
+  --text:#1a1a1a;--muted:#5a5a5a;--dim:#9a9a9a;
+  --pink:#ff6b8a;--pink-d:#d44d6a;
+  --mag:#ff3dab;--mag-d:#cc2088;
+  --pur:#8b3dff;--pur-d:#6a1fcc;
+  --blue:#4a7fe8;--blue-d:#2e5cc4;
   --fire-glow:rgba(255,107,138,.3);
 }
-/* Тема Природная */
 body.theme-nature{
-  --bg:#0e1510;
-  --card:#1a251d;
-  --border:rgba(124,179,66,.15);
-  --border2:rgba(124,179,66,.3);
-  --text:#e8f5e9;
-  --muted:#a5c7a8;
-  --dim:#6a8a6d;
-  --pink:#7cb342;
-  --mag:#a5d66a;
-  --pur:#4a8a5a;
-  --blue:#5a9a8a;
+  --bg:#0e1510;--card:#1a251d;
+  --border:rgba(124,179,66,.15);--border2:rgba(124,179,66,.3);
+  --text:#e8f5e9;--muted:#a5c7a8;--dim:#6a8a6d;
+  --pink:#7cb342;--pink-d:#5a8a30;
+  --mag:#a5d66a;--mag-d:#7a9a4d;
+  --pur:#4a8a5a;--pur-d:#326040;
+  --blue:#5a9a8a;--blue-d:#3a7060;
   --fire-glow:rgba(124,179,66,.4);
 }
-/* Тема Киберпанк */
 body.theme-cyber{
-  --bg:#000000;
-  --card:#0a0a14;
-  --border:rgba(0,240,255,.15);
-  --border2:rgba(0,240,255,.35);
-  --text:#ffffff;
-  --muted:#88d8e8;
-  --dim:#5a7a8a;
-  --pink:#00f0ff;
-  --mag:#ff00ea;
-  --pur:#a020f0;
-  --blue:#0080ff;
+  --bg:#000000;--card:#0a0a14;
+  --border:rgba(0,240,255,.15);--border2:rgba(0,240,255,.35);
+  --text:#ffffff;--muted:#88d8e8;--dim:#5a7a8a;
+  --pink:#00f0ff;--pink-d:#00a8b8;
+  --mag:#ff00ea;--mag-d:#c400a8;
+  --pur:#a020f0;--pur-d:#7010b8;
+  --blue:#0080ff;--blue-d:#005ab8;
   --fire-glow:rgba(0,240,255,.5);
 }
-/* Светлые темы — корректировки текста */
+/* Светлые темы */
 body.theme-soft .title,
 body.theme-day .title{ color:var(--text) !important; }
 body.theme-soft .brand-sub,

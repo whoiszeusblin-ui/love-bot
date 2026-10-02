@@ -1,39 +1,57 @@
-/* Карточка серии — использует переменные темы */
+/* ===== КНОПКИ ДЕЙСТВИЙ ===== */
+.act.pink{background:linear-gradient(145deg,var(--pink),var(--pink-d));box-shadow:0 8px 24px var(--fire-glow)}
+.act.mag{background:linear-gradient(145deg,var(--mag),var(--mag-d));box-shadow:0 8px 24px var(--fire-glow)}
+.act.pur{background:linear-gradient(145deg,var(--pur),var(--pur-d));box-shadow:0 8px 24px var(--fire-glow)}
+.act.blue{background:linear-gradient(145deg,var(--blue),var(--blue-d));box-shadow:0 8px 24px var(--fire-glow)}
+.act.dark{background:var(--card);border:1.5px solid var(--border2);box-shadow:none}
+.act.dark::after{background:linear-gradient(180deg,rgba(255,255,255,.03),transparent 60%)}
+
+/* ===== ПОЛУЧАТЕЛИ ===== */
+.rec{background:var(--card);border-color:var(--border)}
+.rec.active{
+  border-color:var(--pink);
+  background:linear-gradient(160deg,var(--pink),var(--mag));
+  background:linear-gradient(160deg,rgba(255,255,255,0),rgba(255,255,255,0)),
+             linear-gradient(160deg,var(--pink),var(--mag));
+  opacity:.95;
+  box-shadow:0 0 0 1px var(--pink),0 8px 28px var(--fire-glow);
+}
+.rec.active .name,.rec.active .st,.rec.active .em{color:#fff}
+.rec.active .st{color:rgba(255,255,255,.85)}
+.rec.active .dot{background:#fff;box-shadow:0 0 8px #fff}
+.rec.active::before{background:radial-gradient(circle,var(--pink),transparent 70%)}
+
+/* ===== ОГОНЁК ===== */
 .fire-card{
   background:linear-gradient(145deg,var(--card),var(--bg));
-  border-color:rgba(255,255,255,.1);
+  border-color:var(--border2);
   box-shadow:0 10px 40px var(--fire-glow,rgba(255,33,100,.2));
 }
-body.theme-soft .fire-card,
-body.theme-day .fire-card{border-color:rgba(0,0,0,.1)}
-.fire-card::before{
-  background:radial-gradient(circle,var(--fire-glow,rgba(255,80,30,.35)),transparent 60%);
-}
-.fire-card.off{
-  background:linear-gradient(145deg,var(--card),var(--bg));
-  border-color:var(--border2);
-}
-.fire-card.off::before{
-  background:radial-gradient(circle,rgba(120,120,120,.12),transparent 60%);
-}
-.fire-emoji{filter:drop-shadow(0 0 20px var(--pink,rgba(255,80,30,.8)))}
+.fire-card::before{background:radial-gradient(circle,var(--fire-glow,rgba(255,80,30,.35)),transparent 60%)}
+.fire-card.off{background:linear-gradient(145deg,var(--card),var(--bg));border-color:var(--border2)}
+.fire-card.off::before{background:radial-gradient(circle,rgba(120,120,120,.12),transparent 60%)}
+.fire-emoji{filter:drop-shadow(0 0 20px var(--pink))}
 .fire-num{
-  background:linear-gradient(135deg,var(--pink,#ff6a2a),var(--mag,#fb3dff));
-  -webkit-background-clip:text;
-  -webkit-text-fill-color:transparent;
-  background-clip:text;
+  background:linear-gradient(135deg,var(--pink),var(--mag));
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
 }
 .fire-btn{
-  background:linear-gradient(145deg,var(--pink,#ff6a2a),var(--mag,#ff2164));
-  box-shadow:0 6px 0 rgba(0,0,0,.4),0 10px 24px var(--fire-glow,rgba(255,33,100,.4));
+  background:linear-gradient(145deg,var(--pink),var(--pink-d));
+  box-shadow:0 6px 0 rgba(0,0,0,.4),0 10px 24px var(--fire-glow);
 }
 .fire-btn:active{box-shadow:0 2px 0 rgba(0,0,0,.4)}
-/* Карточки наказаний */
-.punish-card{
-  background:linear-gradient(145deg,var(--card),var(--bg));
-  border-color:var(--pink);
-}
+
+/* ===== НАКАЗАНИЯ ===== */
+.punish-card{background:linear-gradient(145deg,var(--card),var(--bg));border-color:var(--pink)}
+.punish-title{color:var(--pink)}
 .punish-btn{
-  background:linear-gradient(145deg,var(--pink),var(--mag));
-  box-shadow:0 5px 0 rgba(0,0,0,.4),0 8px 20px var(--fire-glow,rgba(255,150,30,.35));
+  background:linear-gradient(145deg,var(--pink),var(--pink-d));
+  box-shadow:0 5px 0 rgba(0,0,0,.4),0 8px 20px var(--fire-glow);
 }
+
+/* ===== ПРОЧЕЕ ===== */
+.logout:active{color:var(--pink);border-color:var(--pink)}
+.stat-val{background:linear-gradient(135deg,var(--pink),var(--mag));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.theme-btn{background:var(--card);border-color:var(--border);color:var(--text)}
+.theme-item{background:var(--card);border-color:var(--border);color:var(--text)}
+.theme-item.active{border-color:var(--pink);box-shadow:0 0 20px var(--fire-glow)}
