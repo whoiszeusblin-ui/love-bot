@@ -1,35 +1,52 @@
-module.exports = function(app, { binGet, binPut, findByToken, loadUsers, tgSend }) {
+module.exports = function(app, { findByToken, loadUsers }) {
 
-  app.post('/api/ai-image', async (req, res) => {
-    const { token, to, prompt } = req.body || {};
+  // 1. Генерируем URL картинки (не отправляем)
+  app.post('/api/ai-generate', async (req, res) => {
+    const { token, prompt } = req.body || {};
     const me = findByToken(token);
     if (!me) return res.status(401).json({ error: 'no' });
-    if (!to || !prompt || !prompt.trim()) return res.status(400).json({ error: 'Пустой запрос' });
+    if (!prompt || !prompt.trim()) return res.status(400).json({ error: 'Пустой запрос' });
     if (prompt.length > 200) return res.status(400).json({ error: 'Слишком длинно' });
-
-    const receiver = loadUsers().find(u => u.id === to);
-    if (!receiver) return res.status(404).json({ error: 'Получатель не найден' });
-    if (!receiver.chatId) return res.status(400).json({ error: receiver.name + ' не подключён' });
 
     try {
       const cleanPrompt = prompt.trim().slice(0, 200);
       const seed = Math.floor(Math.random() * 999999);
       const url = 'https://image.pollinations.ai/prompt/' + encodeURIComponent(cleanPrompt)
         + '?width=1024&height=1024&nologo=true&seed=' + seed + '&model=flux';
+      res.json({ ok: true, url, prompt: cleanPrompt, seed });
+    } catch(e) {
+      res.status(500).json({ error: e.message });
+    }
+  });
 
-      console.log('AI: generating "' + cleanPrompt + '"');
+  // 2. Отправляем выбранную картинку партнёру
+  app.post('/api/ai-send', async (req, res) => {
+    const { token, to, url, prompt } = req.body || {};
+    const me = findByToken(token);
+    if (!me) return res.status(401).json({ error: 'no' });
+    if (!to || !url) return res.status(400).json({ error: 'Нет данных' });
+    if (url.indexOf('https://image.pollinations.ai/') !== 0) {
+      return res.status(400).json({ error: 'Неверный URL' });
+    }
+
+    const receiver = loadUsers().find(u => u.id === to);
+    if (!receiver) return res.status(404).json({ error: 'Получатель не найден' });
+    if (!receiver.chatId) return res.status(400).json({ error: receiver.name + ' не подключён' });
+
+    try {
+      console.log('AI: sending to Telegram for ' + receiver.name);
       const imgResp = await fetch(url);
       if (!imgResp.ok) throw new Error('Pollinations ответил ' + imgResp.status);
       const buf = await imgResp.arrayBuffer();
       const contentType = imgResp.headers.get('content-type') || 'image/jpeg';
       console.log('AI: got', buf.byteLength, 'bytes');
 
+      const BOT_TOKEN = process.env.TG_BOT_TOKEN;
       const formData = new FormData();
       formData.append('chat_id', receiver.chatId);
       formData.append('photo', new Blob([buf], { type: contentType }), 'ai.jpg');
-      formData.append('caption', me.emoji + ' ' + me.name + ' 🎨\n\n"' + cleanPrompt + '"');
+      formData.append('caption', me.emoji + ' ' + me.name + ' 🎨\n\n"' + (prompt || '') + '"');
 
-      const BOT_TOKEN = process.env.TG_BOT_TOKEN;
       const tgResp = await fetch('https://api.telegram.org/bot' + BOT_TOKEN + '/sendPhoto', {
         method: 'POST', body: formData
       });
@@ -38,7 +55,7 @@ module.exports = function(app, { binGet, binPut, findByToken, loadUsers, tgSend 
 
       res.json({ ok: true });
     } catch(e) {
-      console.error('AI error:', e.message);
+      console.error('AI send error:', e.message);
       res.status(500).json({ error: e.message });
     }
   });

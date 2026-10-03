@@ -5,6 +5,9 @@
 
   const IDEAS = ['кот в шляпе', 'закат у моря', 'милые цветы', 'воздушный шар', 'звёздное небо'];
 
+  let currentUrl = null;
+  let currentPrompt = '';
+
   function buildModal(){
     if ($('aiModalBg')) return;
     const bg = document.createElement('div');
@@ -18,21 +21,20 @@
         '<textarea class="ai-textarea" id="aiPrompt" maxlength="200" placeholder="Например: милые коты в космосе"></textarea>' +
         '<div class="ai-ideas" id="aiIdeas"></div>' +
         '<div class="ai-progress" id="aiProgress">' +
-          '<div class="ai-progress-text" id="aiProgressText">Идёт генерация...</div>' +
+          '<div class="ai-progress-text" id="aiProgressText">Генерирую...</div>' +
           '<div class="ai-progress-bar"><div class="ai-progress-fill" id="aiProgressFill"></div></div>' +
-          '<div class="ai-progress-text" id="aiProgressSub">обычно занимает 5-15 секунд</div>' +
+          '<div class="ai-progress-text" id="aiProgressSub">обычно 5-15 секунд</div>' +
         '</div>' +
         '<div class="ai-result" id="aiResult"></div>' +
-        '<div class="ai-btns">' +
+        '<div class="ai-btns" id="aiBtns">' +
           '<button class="ai-btn-cancel" onclick="aiClose()">Отмена</button>' +
           '<button class="ai-btn-ok" id="aiSubmit">🎨 Нарисовать</button>' +
         '</div>' +
       '</div>';
     document.body.appendChild(bg);
-    bg.addEventListener('click', e => { if (e.target.id === 'aiModalBg') aiClose(); });
+    bg.addEventListener('click', e => { if (e.target.id === 'aiModalBg') window.aiClose(); });
     $('aiSubmit').addEventListener('click', generate);
 
-    // идеи
     const ideas = $('aiIdeas');
     IDEAS.forEach(text => {
       const b = document.createElement('button');
@@ -50,7 +52,9 @@
       if ($('aiPrompt')) $('aiPrompt').value = '';
       if ($('aiProgress')) $('aiProgress').classList.remove('show');
       if ($('aiResult')) { $('aiResult').classList.remove('show'); $('aiResult').innerHTML = ''; }
-      if ($('aiSubmit')) $('aiSubmit').disabled = false;
+      resetBtns();
+      currentUrl = null;
+      currentPrompt = '';
     }, 300);
   };
 
@@ -68,6 +72,16 @@
     setTimeout(() => { const t = $('aiPrompt'); if (t) t.focus(); }, 300);
   };
 
+  function resetBtns(){
+    const b = $('aiBtns');
+    if (b) {
+      b.innerHTML =
+        '<button class="ai-btn-cancel" onclick="aiClose()">Отмена</button>' +
+        '<button class="ai-btn-ok" id="aiSubmit">🎨 Нарисовать</button>';
+      $('aiSubmit').addEventListener('click', generate);
+    }
+  }
+
   async function generate(){
     const t = getToken();
     const prompt = ($('aiPrompt').value || '').trim();
@@ -81,44 +95,74 @@
     const fill = $('aiProgressFill');
     const ptext = $('aiProgressText');
     const psub = $('aiProgressSub');
+    const result = $('aiResult');
 
     btn.disabled = true;
     btn.textContent = 'Генерирую...';
     progress.classList.add('show');
-    $('aiResult').classList.remove('show');
-    $('aiResult').innerHTML = '';
+    result.classList.remove('show');
+    result.innerHTML = '';
     fill.style.width = '0%';
-    ptext.textContent = 'Идёт генерация...';
-    psub.textContent = 'обычно занимает 5-15 секунд';
+    ptext.textContent = 'Генерирую...';
+    psub.textContent = 'обычно 5-15 секунд';
 
-    // Анимируем прогресс-бар до 90%
     let p = 0;
     const interval = setInterval(() => {
-      if (p < 90) { p += Math.random() * 8; if (p > 90) p = 90; fill.style.width = p + '%'; }
+      if (p < 90) { p += Math.random() * 6; if (p > 90) p = 90; fill.style.width = p + '%'; }
     }, 400);
 
     try {
-      const r = await fetch('/api/ai-image', {
+      const r = await fetch('/api/ai-generate', {
         method:'POST',
         headers:{'Content-Type':'application/json'},
-        body: JSON.stringify({ token: t, to: recipient.id, prompt })
+        body: JSON.stringify({ token: t, prompt })
       });
       const d = await r.json();
       if (!d.ok) throw new Error(d.error || 'Ошибка');
 
-      clearInterval(interval);
-      fill.style.width = '100%';
-      ptext.textContent = '✅ Отправлено!';
-      psub.textContent = recipient.name + ' уже видит рисунок';
+      currentUrl = d.url;
+      currentPrompt = d.prompt;
 
-      // Показываем визуально «успех»
-      $('aiResult').innerHTML = '<div style="padding:20px;text-align:center;background:linear-gradient(145deg,var(--pink),var(--mag));color:#fff;font-weight:900">🎨 Рисунок отправлен!</div>';
-      $('aiResult').classList.add('show');
+      // Загружаем картинку через <img> (проверяем, что она реально открывается)
+      ptext.textContent = 'Загружаю картинку...';
+      const img = new Image();
+      img.crossOrigin = 'anonymous';
+      img.onload = () => {
+        clearInterval(interval);
+        fill.style.width = '100%';
+        ptext.textContent = '✅ Готово!';
 
-      if (window.toastShow) window.toastShow('Рисунок отправлен ' + recipient.name, false, '🎨');
-      if (window.sparks) window.sparks(window.innerWidth/2, window.innerHeight/2);
+        result.innerHTML = '';
+        const imgEl = document.createElement('img');
+        imgEl.src = currentUrl;
+        imgEl.alt = 'AI';
+        result.appendChild(imgEl);
+        result.classList.add('show');
+        progress.classList.remove('show');
 
-      setTimeout(() => window.aiClose(), 2000);
+        // Показываем кнопки: Другая + Отправить
+        const btns = $('aiBtns');
+        btns.innerHTML =
+          '<button class="ai-btn-cancel" id="aiRetry">🔄 Другая</button>' +
+          '<button class="ai-btn-ok" id="aiSend">📤 Отправить</button>';
+        $('aiRetry').addEventListener('click', () => {
+          result.classList.remove('show');
+          result.innerHTML = '';
+          currentUrl = null;
+          resetBtns();
+          generate();
+        });
+        $('aiSend').addEventListener('click', send);
+      };
+      img.onerror = () => {
+        clearInterval(interval);
+        progress.classList.remove('show');
+        if (window.toastShow) window.toastShow('Не удалось загрузить картинку', true);
+        btn.disabled = false;
+        btn.textContent = '🎨 Нарисовать';
+      };
+      img.src = currentUrl;
+
     } catch(e) {
       clearInterval(interval);
       progress.classList.remove('show');
@@ -128,7 +172,31 @@
     }
   }
 
-  /* Добавляем кнопку в быстрые действия */
+  async function send(){
+    if (!currentUrl) return;
+    const t = getToken();
+    const btn = $('aiSend');
+    if (btn) { btn.disabled = true; btn.textContent = 'Отправляю...'; }
+
+    try {
+      const r = await fetch('/api/ai-send', {
+        method:'POST',
+        headers:{'Content-Type':'application/json'},
+        body: JSON.stringify({ token: t, to: recipient.id, url: currentUrl, prompt: currentPrompt })
+      });
+      const d = await r.json();
+      if (!d.ok) throw new Error(d.error || 'Ошибка');
+
+      if (window.toastShow) window.toastShow('🎨 Отправлено ' + recipient.name, false, '🎨');
+      if (window.sparks) window.sparks(window.innerWidth/2, window.innerHeight/2);
+
+      setTimeout(() => window.aiClose(), 1200);
+    } catch(e) {
+      if (window.toastShow) window.toastShow('❌ ' + e.message, true);
+      if (btn) { btn.disabled = false; btn.textContent = '📤 Отправить'; }
+    }
+  }
+
   function addButton(){
     const grid = document.querySelector('.actions');
     if (!grid || $('aiBtn')) return;
@@ -137,7 +205,6 @@
     btn.id = 'aiBtn';
     btn.innerHTML = '<span class="ic">🎨</span><span class="lbl">AI-рисунок</span><span class="hint">neural</span>';
     btn.onclick = window.aiOpen;
-    // Вставляем после «Рисунок»
     const firstBig = grid.querySelector('.act.big');
     if (firstBig && firstBig.nextSibling) {
       grid.insertBefore(btn, firstBig.nextSibling);
@@ -146,13 +213,10 @@
     }
   }
 
-  function init(){
-    if (document.readyState === 'loading') {
-      document.addEventListener('DOMContentLoaded', () => setTimeout(addButton, 1500));
-    } else {
-      setTimeout(addButton, 1500);
-    }
-    setTimeout(addButton, 3000);
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', () => setTimeout(addButton, 1500));
+  } else {
+    setTimeout(addButton, 1500);
   }
-  init();
+  setTimeout(addButton, 3000);
 })();
