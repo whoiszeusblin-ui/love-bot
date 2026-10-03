@@ -6,8 +6,13 @@
   const PRESETS = ['😊 Хорошее', '😍 Отличное', '😐 Нормально', '😴 Уставшее', '😢 Грустное', '🤔 Задумчивое'];
   let selectedChip = '';
 
-  function todayKey(){
-    return 'teplo_mood_' + new Date().toISOString().slice(0, 10);
+  function hourKey(){
+    var d = new Date();
+    var y = d.getFullYear();
+    var mo = String(d.getMonth()+1).padStart(2,'0');
+    var da = String(d.getDate()).padStart(2,'0');
+    var h = String(d.getHours()).padStart(2,'0');
+    return 'teplo_mood_' + y + '-' + mo + '-' + da + '_' + h;
   }
 
   function buildModal(){
@@ -59,7 +64,7 @@
     if (m) m.classList.remove('show');
     // Если «Пропустить» — запоминаем, что сегодня уже показали
     if (skip !== false) {
-      try { localStorage.setItem(todayKey(), 'skipped'); } catch(e){}
+      try { localStorage.setItem(hourKey(), 'skipped'); } catch(e){}
     }
   };
 
@@ -81,7 +86,7 @@
       const d = await r.json();
       if (!d.ok) throw new Error(d.error || 'Ошибка');
 
-      try { localStorage.setItem(todayKey(), 'sent'); } catch(e){}
+      try { localStorage.setItem(hourKey(), 'sent'); } catch(e){}
       if (window.toastShow) window.toastShow('🎭 Настроение отправлено', false);
       if (window.sparks) window.sparks(window.innerWidth/2, window.innerHeight/2);
       window.moodClose(false);
@@ -101,7 +106,7 @@
       const d = await r.json();
       renderMoods(d.moods || []);
       // Если у меня сегодня нет настроения и я не пропускал — показать окно
-      if (!d.mine && !localStorage.getItem(todayKey())) {
+      if (!d.mine && !localStorage.getItem(hourKey())) {
         setTimeout(() => window.moodOpen(), 2500);
       }
     } catch(e){}
@@ -141,7 +146,18 @@
 
   function init(){
     loadMoods();
-    setInterval(loadMoods, 120000); // обновлять каждые 2 минуты
+    // Проверяем каждые 30 секунд — если час сменился и настроения нет, покажем окно
+    setInterval(loadMoods, 30000);
+
+    // Дополнительно отслеживаем смену часа внутри одной сессии
+    let lastHour = new Date().getHours();
+    setInterval(function(){
+      const curHour = new Date().getHours();
+      if (curHour !== lastHour) {
+        lastHour = curHour;
+        loadMoods();
+      }
+    }, 20000);
   }
 
   if (document.readyState === 'loading') {
