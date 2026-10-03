@@ -273,6 +273,7 @@ app.post('/api/send-photo', upload.single('photo'), async (req, res) => {
 });
 
 /* ============ STATIC ============ */
+require("./ai-routes")(app, { binGet, binPut, findByToken, loadUsers, tgSend });
 require("./wish-routes")(app, { binGet, binPut, findByToken, loadUsers, tgSend });
 require("./quiz-routes")(app, { binGet, binPut, findByToken, loadUsers, tgSend, BOT_TOKEN });
 require("./profile-routes")(app, { binGet, binPut, findByToken, loadUsers, tgSend });
