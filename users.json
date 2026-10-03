@@ -1,6 +1,7 @@
 {
   "users": [
-    { "id": "user1", "name": "Арина",  "emoji": "🐱", "token": "220122ac", "chatId": "6683204087" },
-    { "id": "user2", "name": "Максим", "emoji": "🦊", "token": "203169ok", "chatId": "5795138942" }
+    { "id": "user1", "name": "Арина",  "emoji": "🐱", "token": "220122ac",        "chatId": "6683204087" },
+    { "id": "user2", "name": "Максим", "emoji": "🦊", "token": "203169ok",        "chatId": "5795138942" },
+    { "id": "user3", "name": "Настя",  "emoji": "🐶", "token": "your1212karma",   "chatId": "1219428681" }
   ]
 }
