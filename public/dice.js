@@ -116,7 +116,7 @@
     section.id = 'diceTrigger';
     section.style.marginBottom = '22px';
     section.innerHTML =
-      '<div class="slabel">Мини-игра</div>' +
+      '<div class="slabel">🎲 Кубик Судьбы</div>' +
       '<button class="dice-trigger" onclick="diceOpen()">' +
         '<span class="dt-em">🎲</span>' +
         '<div class="dt-info">' +
