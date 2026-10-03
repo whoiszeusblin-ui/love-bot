@@ -96,7 +96,7 @@
         const unread = !w.isMine && !w.seen;
         const dt = new Date(w.createdAt);
         const ago = timeAgo(w.createdAt);
-        html += '<div class="wish-item' + (unread ? ' unread' : '') + '" data-id="' + w.id + '">';
+        html += '<div class="wish-item' + (unread ? ' unread' : '') + (w.done ? ' done' : '') + '" data-id="' + w.id + '">';
         html += '<div class="wish-item-head">' +
           '<span class="wem">' + esc(w.fromEmoji) + '</span>' +
           '<span class="wname">' + (w.isMine ? 'Ты' : esc(w.fromName)) + '</span>' +
@@ -104,7 +104,14 @@
         '</div>';
         html += '<div class="wish-item-text">' + esc(w.text) + '</div>';
         if (w.isMine) {
-          html += '<button class="wish-item-del" onclick="deleteWish(\'' + w.id + '\')">✕</button>';
+          html += '<div class="wish-item-actions">';
+          html += '<button class="wish-item-done' + (w.done ? ' checked' : '') + '" onclick="toggleWish(\'' + w.id + '\')">' + (w.done ? '✓ Сделано' : '⭕ Отметить сделанным') + '</button>';
+          html += '<button class="wish-item-del" onclick="deleteWish(\'' + w.id + '\')">🗑 Удалить</button>';
+          html += '</div>';
+        } else {
+          if (w.done) {
+            html += '<div class="wish-done-badge">✓ Сделано</div>';
+          }
         }
         html += '</div>';
       });
@@ -138,6 +145,24 @@
     if (tab === 'all' || tab === 'mine') loadWishes();
   };
   window.wishClose = closeModal;
+
+  window.toggleWish = async function(id){
+    const t = getToken();
+    try {
+      const r = await fetch('/api/wish/toggle', {
+        method:'POST',
+        headers:{'Content-Type':'application/json'},
+        body: JSON.stringify({ token: t, id })
+      });
+      const d = await r.json();
+      if (!d.ok) throw new Error(d.error || 'Ошибка');
+      await loadWishes();
+      renderModal();
+      if (window.toastShow) window.toastShow(d.done ? '✅ Отмечено' : '↩️ Снято', false);
+    } catch(e){
+      if (window.toastShow) window.toastShow(e.message, true);
+    }
+  };
 
   window.submitWish = async function(){
     const t = getToken();
