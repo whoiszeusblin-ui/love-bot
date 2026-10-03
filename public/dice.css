@@ -1,0 +1,166 @@
+:root{ --dice-size: min(180px, 45vw); }
+
+/* ===== ТРИГГЕР В GAMES ===== */
+.dice-trigger{
+  width:100%;
+  padding:18px 20px;
+  display:flex;align-items:center;gap:14px;
+  background:
+    linear-gradient(rgba(20,20,25,.92), rgba(20,20,25,.92)) padding-box,
+    linear-gradient(135deg, var(--pink), var(--mag), var(--pur), var(--blue), var(--pink)) border-box;
+  border:1.5px solid transparent;
+  border-radius:16px;
+  cursor:pointer;color:var(--text);font-family:inherit;
+  text-align:left;
+  transition:transform .15s ease;
+}
+.dice-trigger:active{ transform:scale(.98); }
+.dt-em{ font-size:34px;line-height:1; }
+.dt-info{ flex:1;min-width:0; }
+.dt-title{ font-size:16px;font-weight:900;margin-bottom:2px; }
+.dt-sub{ font-size:12px;color:var(--dim); }
+.dt-arrow{ font-size:18px;color:var(--dim); }
+body.theme-soft .dice-trigger, body.theme-day .dice-trigger{
+  background:
+    linear-gradient(rgba(255,255,255,.94), rgba(255,255,255,.94)) padding-box,
+    linear-gradient(135deg, var(--pink), var(--mag), var(--pur), var(--blue), var(--pink)) border-box;
+  color:#1a1a1a;
+}
+
+/* ===== OVERLAY ===== */
+.dice-overlay{
+  position:fixed;inset:0;
+  background:radial-gradient(circle at 50% 40%, #1a0510 0%, #000 80%);
+  z-index:6000;
+  display:none;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  padding:24px;
+  text-align:center;
+  overflow:hidden;
+}
+.dice-overlay.show{ display:flex; animation:diceFadeIn .35s ease; }
+@keyframes diceFadeIn{ from{opacity:0} to{opacity:1} }
+
+.dice-header{
+  position:absolute;top:20px;left:0;right:0;
+  padding:0 20px;
+  display:flex;justify-content:space-between;align-items:center;
+}
+.dice-close{
+  width:42px;height:42px;
+  border-radius:12px;
+  background:rgba(20,20,25,.85);
+  border:1px solid rgba(255,255,255,.1);
+  color:#fff;font-size:18px;cursor:pointer;
+  font-family:inherit;
+  transition:transform .15s ease;
+}
+.dice-close:active{ transform:scale(.9); }
+.dice-title{
+  font-size:13px;letter-spacing:.14em;
+  text-transform:uppercase;
+  font-family:'Roboto Mono',monospace;
+  color:#888;
+}
+
+/* ===== РЕЗУЛЬТАТ ===== */
+.dice-result{
+  font-size:72px;
+  font-weight:900;
+  background:linear-gradient(135deg, var(--pink), var(--mag));
+  -webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;
+  background-clip:text;
+  min-height:90px;
+  display:flex;align-items:center;justify-content:center;
+  opacity:0;
+  transition:opacity .3s ease;
+  filter:drop-shadow(0 0 20px var(--fire-glow));
+}
+.dice-result.show{
+  opacity:1;
+  animation:dicePopNum .6s cubic-bezier(.34,1.56,.64,1);
+}
+@keyframes dicePopNum{
+  0%{ transform:scale(0) rotate(-20deg); }
+  60%{ transform:scale(1.2) rotate(5deg); }
+  100%{ transform:scale(1) rotate(0); }
+}
+
+/* ===== 3D-КУБИК ===== */
+.dice-scene{
+  perspective:1200px;
+  width:var(--dice-size);
+  height:var(--dice-size);
+  margin:20px 0 30px;
+  position:relative;
+}
+
+.dice-cube{
+  position:relative;
+  width:100%;
+  height:100%;
+  transform-style:preserve-3d;
+  transition:transform 2.6s cubic-bezier(.15,.85,.25,1);
+  will-change:transform;
+  transform:rotateX(0deg) rotateY(0deg);
+}
+
+.dice-face{
+  position:absolute;
+  width:var(--dice-size);
+  height:var(--dice-size);
+  background:linear-gradient(145deg, rgba(25,25,32,.98), rgba(15,15,20,.98));
+  border:2px solid var(--pink);
+  border-radius:22px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:calc(var(--dice-size) * 0.5);
+  font-weight:900;
+  color:var(--pink);
+  box-shadow:
+    0 0 24px var(--fire-glow),
+    inset 0 0 30px rgba(0,0,0,.6),
+    inset 0 2px 4px rgba(255,255,255,.05);
+  text-shadow:0 0 24px var(--fire-glow);
+  font-family:'Lato',sans-serif;
+}
+
+.dice-face--front  { transform: rotateY(0deg)   translateZ(calc(var(--dice-size) / 2)); }
+.dice-face--back   { transform: rotateY(180deg) translateZ(calc(var(--dice-size) / 2)); }
+.dice-face--right  { transform: rotateY(90deg)  translateZ(calc(var(--dice-size) / 2)); }
+.dice-face--left   { transform: rotateY(-90deg) translateZ(calc(var(--dice-size) / 2)); }
+.dice-face--top    { transform: rotateX(90deg)  translateZ(calc(var(--dice-size) / 2)); }
+.dice-face--bottom { transform: rotateX(-90deg) translateZ(calc(var(--dice-size) / 2)); }
+
+/* ===== КНОПКА ===== */
+.dice-btn{
+  padding:18px 44px;
+  border:none;border-radius:16px;
+  background:linear-gradient(145deg, var(--pink), var(--pink-d, #c4184d));
+  color:#fff;
+  font-family:inherit;font-size:16px;font-weight:900;
+  letter-spacing:.02em;
+  cursor:pointer;
+  box-shadow:
+    0 8px 0 rgba(0,0,0,.4),
+    0 14px 30px var(--fire-glow);
+  transition:transform .12s ease, box-shadow .12s ease;
+  margin-top:10px;
+}
+.dice-btn:active{
+  transform:translateY(6px);
+  box-shadow:
+    0 2px 0 rgba(0,0,0,.4),
+    0 4px 12px var(--fire-glow);
+}
+.dice-btn:disabled{ opacity:.5;pointer-events:none; }
+
+.dice-hint{
+  font-size:12px;color:#666;
+  font-family:'Roboto Mono',monospace;
+  margin-top:22px;letter-spacing:.05em;
+}
