@@ -83,6 +83,12 @@
   }
 
   async function generate(){
+    const _t = getToken();
+    if (!_t) {
+      showInlineError('Нет токена — открой сайт по персональной ссылке');
+      return;
+    }
+    console.log('AI: generate start');
     const t = getToken();
     const prompt = ($('aiPrompt').value || '').trim();
     if (!prompt) {
@@ -197,7 +203,14 @@
     }
   }
 
-  function addButton(){
+  function showInlineError(msg){
+    const result = $('aiResult');
+    if (!result) return;
+    result.innerHTML = '<div style="padding:16px;text-align:center;background:linear-gradient(145deg,#ff2164,#c4184d);color:#fff;font-weight:700;border-radius:12px;font-size:13px">❌ ' + msg + '</div>';
+    result.classList.add('show');
+  }
+
+function addButton(){
     const grid = document.querySelector('.actions');
     if (!grid || $('aiBtn')) return;
     const btn = document.createElement('button');
