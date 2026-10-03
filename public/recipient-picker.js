@@ -113,17 +113,22 @@
         '<span class="rp-status">' + (u.ready ? 'готов' : 'не подключён') + '</span>';
 
       btn.addEventListener('click', function(){
-        // Обновляем глобальный recipient в index.html
-        if (typeof recipient !== 'undefined') {
-          // recipient — переменная let в index.html, присваиваем через window — не сработает,
-          // используем хак: вызываем клик по старой карточке если она есть
-        }
-        // Правим через window-функцию, которую экспортирует index.html (если нет — назначим)
-        if (typeof window.rpSelectRecipient === 'function') {
-          window.rpSelectRecipient(u.id);
-        }
+        // 1. Сначала закрываем — гарантированно
         closeModal();
-        refreshBtn();
+
+        // 2. Потом выбираем — в try/catch, чтобы ошибки не помешали
+        try {
+          if (typeof window.rpSelectRecipient === 'function') {
+            window.rpSelectRecipient(u.id);
+          } else {
+            console.warn('rpSelectRecipient not defined');
+          }
+        } catch(err) {
+          console.error('rpSelectRecipient error:', err);
+        }
+
+        // 3. Обновляем кнопку
+        setTimeout(refreshBtn, 50);
       });
 
       list.appendChild(btn);
