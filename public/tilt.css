@@ -1,0 +1,45 @@
+/* ===== ПОДГОТОВКА ЭЛЕМЕНТОВ ===== */
+.act, .rec, .settings-item, .faq-item, .wish-item,
+.dice-trigger, .quiz-card, .hitem, .btn-item {
+  transform-style: preserve-3d;
+  backface-visibility: hidden;
+  will-change: transform;
+}
+
+/* Плавный возврат после тапа */
+.act, .rec {
+  transition: transform 0.35s cubic-bezier(.34,1.56,.64,1);
+}
+
+/* Во время касания — резкий отклик */
+.act.tilting, .rec.tilting {
+  transition: transform 0.08s ease-out;
+}
+
+/* ===== ГИРОСКОП: контейнеры для сдвига ===== */
+.app {
+  transition: transform 0.5s cubic-bezier(.22,1,.36,1);
+  will-change: transform;
+}
+
+/* ===== Лёгкий блеск на наклонённых карточках ===== */
+.act.tilting::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: radial-gradient(
+    circle at var(--tilt-x, 50%) var(--tilt-y, 50%),
+    rgba(255,255,255,0.18) 0%,
+    transparent 60%);
+  pointer-events: none;
+  z-index: 1;
+  opacity: 0.9;
+  transition: opacity 0.3s ease;
+}
+
+/* Уважаем "уменьшить движение" */
+@media (prefers-reduced-motion: reduce) {
+  .app { transition: none !important; }
+  .act.tilting, .rec.tilting { transition: none !important; }
+}
