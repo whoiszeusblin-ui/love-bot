@@ -636,3 +636,17 @@ body.theme-day .quiz-card, body.theme-day .quiz-result-item, body.theme-day .his
 .header-compact{position:fixed !important;top:18px !important;right:18px !important;margin:0 !important;z-index:100 !important;}
 body::before,html{transition:none !important;animation:none !important}body.hue-dragging::before{opacity:1 !important}
 .toast{z-index:99999 !important}
+
+/* ===== ПАРАЛЛАКС-ФОН ===== */
+.bg-anim{
+  will-change: transform;
+  transition: none !important;
+}
+.bg-anim .blob{
+  will-change: transform;
+  /* Сохраняем базовые анимации, добавляем параллакс сверху */
+  transition: none !important;
+}
+.star-layer{
+  will-change: transform;
+}
