@@ -143,10 +143,13 @@ app.post('/api/checkin', async (req, res) => {
       return res.json({ ok: true, already: true, current: s.current, best: s.best });
     }
 
+    // Пропуск уже зафиксирован — не даём избежать наказания
+    const wasMissed = s.missed === true;
     if (s.lastCheckIn === yest) s.current = (s.current || 0) + 1;
     else s.current = 1;
     s.lastCheckIn = today;
-    s.missed = false;
+    // Сбрасываем missed ТОЛЬКО если его не было
+    if (!wasMissed) s.missed = false;
     if (s.current > (s.best || 0)) s.best = s.current;
 
     const ACH = [
